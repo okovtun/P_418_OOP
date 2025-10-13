@@ -1,6 +1,9 @@
 #include<iostream>
 using namespace std;
 
+#define tab "\t"
+#define delimiter "\n------------------------------------------\n"
+
 class Point
 {
 	double x;
@@ -25,17 +28,63 @@ public:
 		this->y = y;
 	}
 
-	//			Methods:
-	double distance(Point other)
+	//			Constructors:
+	/*Point()
 	{
+		x = y = 0;	//записываем в переменые члены класса значения по умолчанию.
+		cout << "DefaultConstructor:\t" << this << endl;
+	}*/
+	/*Point(double x)
+	{
+		this->x = x;
+		this->y = 0;
+		cout << "SingleArgConstructor:\t" << this << endl;
+	}*/
+	Point(double x = 0, double y = 0)
+	{
+		this->x = x;
+		this->y = y;
+		cout << "Constructor:\t\t" << this << endl;
+	}
+	//CopyConstructor
+	Point(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyConstrcutor:\t" << this << endl;
+	}
+	~Point()
+	{
+		cout << "Destructor:\t\t" << this << endl;
+	}
+
+	//			Operators:
+	void operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyAssignment:\t\t" << this << endl;
+	}
+
+	//			 Methods:
+	double distance(const Point& other)const
+	{
+		//other.x *= 100;
+		//other.y *= 100;
+		//this->x *= 100;
+		//this->y *= 100;
 		double x_distance = this->x - other.x;
 		double y_distance = this->y - other.y;
-		double distance = sqrt(x_distance*x_distance + y_distance*y_distance);	//Square Root
+		double distance = sqrt(x_distance*x_distance + y_distance * y_distance);	//Square Root
 		return distance;
+	}
+	void print()const
+	{
+		cout << "X = " << x << ",\tY = " << y << endl;
 	}
 };
 
-double distance(Point A, Point B)
+double distance(const Point& A, const Point& B)
 {
 	double x_distance = A.get_x() - B.get_x();
 	double y_distance = A.get_y() - B.get_y();
@@ -45,7 +94,9 @@ double distance(Point A, Point B)
 
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
-#define FOR_COUNTER_LIFETIME
+//#define FOR_COUNTER_LIFETIME
+//#define CONSTRUCTORS_CHECK
+#define ASSIGNMENT_CHECK
 
 void main()
 {
@@ -76,10 +127,15 @@ void main()
 	B.set_y(8);
 	cout << B.get_x() << "\t" << B.get_y() << endl;
 
+	cout << delimiter << endl;
 	cout << "Расстояние от точки 'A' до точки 'B':" << A.distance(B) << endl;
+	cout << delimiter << endl;
 	cout << "Расстояние от точки 'B' до точки 'A':" << B.distance(A) << endl;
+	cout << delimiter << endl;
 	cout << "Расстояние между точками 'A' и 'B':  " << distance(A, B) << endl;
+	cout << delimiter << endl;
 	cout << "Расстояние между точками 'B' и 'A':  " << distance(B, A) << endl;
+	cout << delimiter << endl;
 #endif // DISTANCE_CHECK
 
 #ifdef FOR_COUNTER_LIFETIME
@@ -91,6 +147,39 @@ void main()
 	//поскольку время жизни переменной 'i' завершается по завершении всех итераций цикла 'for'.
 	cout << endl;
 #endif // FOR_COUNTER_LIFETIME
+
+#ifdef CONSTRUCTORS_CHECK
+	
+	Point A;		//Default constructor
+	A.print();
+
+	Point B = 5;	//Single-argument constructor (Конструктор с одним параметром)
+	B.print();
+
+	Point C(2, 3);	//Конструктор с параметрами
+	C.print();
+
+	Point D = C;	//CopyConstructor
+	D.print();
+
+	Point E;
+	E = D;			//CopyAssignment
+	E.print();
+
+#endif // CONSTRUCTORS_CHECK
+
+#ifdef ASSIGNMENT_CHECK
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << tab << b << tab << c << endl;
+
+	Point A, B, C;
+	A = B = C = Point(2, 3);
+	A.print();
+	B.print();
+	C.print();
+#endif // ASSIGNMENT_CHECK
+
 
 }
 
@@ -123,8 +212,8 @@ void main()
 -----------------------------------------
 		Special members:
 1. Constructor - это метод, который создает объект,
-				 а именно, 
-				 выделяет память под объект, 
+				 а именно,
+				 выделяет память под объект,
 				 и инициализирует его поля;
 	Конструкторы бывают:
 		- с параметрами;
@@ -132,7 +221,7 @@ void main()
 		- по умолчанию - это конструктор, который может быть вызван без параметров;
 		- конструктор копирования;
 		- конструктор переноса;
-2. ~Destructor - это метод, который уничтожает объект 
+2. ~Destructor - это метод, который уничтожает объект
 				 по завершении его времени жизни;
 3. Assignment operator;
 -----------------------------------------
