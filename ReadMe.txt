@@ -3,6 +3,11 @@ https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 
 TODO:
 1. !!!!!	ТЕОРИЮ НАИЗУСТЬ		!!!!!
+2. В Solution 'IntroductionToOOP' добавить класс 'Fraction', описывающий простую дробь.
+   В классе должны быть все необходимые методы и операторы;
+
+DONE:
+1. !!!!!	ТЕОРИЮ НАИЗУСТЬ		!!!!!
 2. Исправить ошибки в секции 'ASSIGNMENT_CHECK';
 
 DONE:

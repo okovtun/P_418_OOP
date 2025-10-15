@@ -1,5 +1,8 @@
 #include<iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
 
 #define tab "\t"
 #define delimiter "\n------------------------------------------\n"
@@ -59,11 +62,14 @@ public:
 	}
 
 	//			Operators:
-	void operator=(const Point& other)
+	Point& operator=(const Point& other)
 	{
 		this->x = other.x;
 		this->y = other.y;
+		cout << "Left:\t" << this << endl;
+		cout << "Right:\t" << &other << endl;
 		cout << "CopyAssignment:\t\t" << this << endl;
+		return *this;
 	}
 
 	//			 Methods:
@@ -75,7 +81,7 @@ public:
 		//this->y *= 100;
 		double x_distance = this->x - other.x;
 		double y_distance = this->y - other.y;
-		double distance = sqrt(x_distance*x_distance + y_distance * y_distance);	//Square Root
+		double distance = sqrt(x_distance * x_distance + y_distance * y_distance);	//Square Root
 		return distance;
 	}
 	void print()const
@@ -92,11 +98,20 @@ double distance(const Point& A, const Point& B)
 	return distance;
 }
 
+Point operator+(const Point& left, const Point& right)
+{
+	Point result;
+	result.set_x(left.get_x() + right.get_x());
+	result.set_y(left.get_y() + right.get_y());
+	return result;
+}
+
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
 //#define FOR_COUNTER_LIFETIME
 //#define CONSTRUCTORS_CHECK
-#define ASSIGNMENT_CHECK
+//#define ASSIGNMENT_CHECK
+#define OPERATORS_CHECK
 
 void main()
 {
@@ -170,16 +185,36 @@ void main()
 
 #ifdef ASSIGNMENT_CHECK
 	int a, b, c;
+
 	a = b = c = 0;
+	
 	cout << a << tab << b << tab << c << endl;
 
 	Point A, B, C;
+	cout << delimiter << endl;
 	A = B = C = Point(2, 3);
+	//Point(2,3); - это €вный вызов конструктора.
+	//Ётот конструктор создает временный безым€нный объект,
+	//который сузествует только в пределах одного выражени€,
+	//и удал€етс€ из пам€ти по завершении выражени€
+	//Point(2, 3).print();
+	cout << delimiter << endl;
 	A.print();
 	B.print();
 	C.print();
+	cout << sizeof(Point) << endl;
 #endif // ASSIGNMENT_CHECK
 
+#ifdef OPERATORS_CHECK
+	int a = 2;
+	int b = 3;
+	int c = a + b;
+
+	Point A(2, 3);
+	Point B(7, 8);
+	Point C = A + B;
+	C.print();
+#endif // OPERATORS_CHECK
 
 }
 
@@ -225,4 +260,28 @@ void main()
 				 по завершении его времени жизни;
 3. Assignment operator;
 -----------------------------------------
+*/
+
+/*
+-----------------------------------------
+			Overloading rules:
+1. ѕерегрузить можно только существующие операторы,
+   создавать новые операторы невозможно:
+	+  - перегружаетс€;
+	++ - перегружаетс€;
+	%  - перегружаетс€;
+	%% - Ќ≈ перегружаетс€;
+2. Ќ≈ все существующие операторы можно перегрузить.
+   Ќ≈ перегружаютс€:
+	?: - Conditional ternary operator;
+	:: - ќператор разрешени€ видимости (Scope operator);
+	.  - ќператор пр€мого доступа (Point operator);
+	.* - Pointer to member selection;
+	-----------------------
+	#  - Preprocessor convert to string;
+	## - Preprocessor concatenate;
+3. ѕерегруженные операторы сохран€ют приоритет;
+4. ѕереопределить поведение операторов со встроенными типами невозможно;
+-----------------------------------------
+	operator
 */
