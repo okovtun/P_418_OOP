@@ -3,7 +3,12 @@ https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 
 TODO:
 1. !!!!!	ТЕОРИЮ НАИЗУСТЬ		!!!!!
-2. В Solution 'IntroductionToOOP' добавить класс 'Fraction', описывающий простую дробь.
+2. ***Решить проблему в операторе '*';
+3. Перегрузить составные присваивания: +=, -=, *=, /=;
+
+DONE:
+1. !!!!!	ТЕОРИЮ НАИЗУСТЬ		!!!!!
+2. В Solution 'IntroductionToOOP' добавить проект 'Fraction', описывающий простую дробь.
    В классе должны быть все необходимые методы и операторы;
 
 DONE:
