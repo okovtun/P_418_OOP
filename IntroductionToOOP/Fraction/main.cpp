@@ -6,6 +6,10 @@ using std::endl;
 #define tab "\t"
 #define delimiter "\n------------------------------------------\n"
 
+class Fraction;
+Fraction operator*(Fraction left, Fraction right);
+Fraction operator/(const Fraction& left, const Fraction& right);
+
 class Fraction
 {
 	int integer;		//целая часть
@@ -91,17 +95,67 @@ public:
 		cout << "CopyAssignment:\t\t" << this << endl;
 		return *this;
 	}
+	Fraction& operator*=(const Fraction& other)
+	{
+		return *this = *this*other;
+	}
+	Fraction operator/=(const Fraction& other)
+	{
+		return *this = *this / other;
+	}
+
+	//			Increment/Decrement:
+	Fraction& operator++()	//Prefix increment
+	{
+		this->integer++;
+		return *this;
+	}
+	Fraction& operator++(int)
+	{
+		//Постфиксные ++/-- всегда принимают один параметр типа 'int',
+		//это позволяет на уровне перегрузки функций отличать их 
+		//от префиксных ++/--;
+		Fraction old = *this;	//old - это локальный объект
+		this->integer++;
+		return old;
+	}
 
 	//			Methods:
-	void to_improper()
+	Fraction& to_improper()
 	{
 		numerator += integer * denominator;
 		integer = 0;
+		return *this;
 	}
-	void to_proper()
+	Fraction& to_proper()
 	{
 		integer += numerator / denominator;
 		numerator %= denominator;
+		return *this;
+	}
+	Fraction inverted()const
+	{
+		Fraction inverted = *this;
+		inverted.to_improper();
+		std::swap(inverted.numerator, inverted.denominator);
+		return inverted;
+	}
+	Fraction& reduce()
+	{
+		//https://www.webmath.ru/poleznoe/formules_12_7.php
+		int more, less, rest = 0;
+		if (numerator > denominator)more = numerator, less = denominator;
+		else less = numerator, more = denominator;
+		do
+		{
+			rest = more % less;
+			more = less;
+			less = rest;
+		} while (rest);
+		int GCD = more;	//GCD - Greatest Common Divisor (Наибольший общий делитель)
+		numerator /= GCD;
+		denominator /= GCD;
+		return *this;
 	}
 	void print()const
 	{
@@ -125,7 +179,7 @@ Fraction operator*(Fraction left, Fraction right)
 	(
 		left.get_numerator()*right.get_numerator(),
 		left.get_denominator()*right.get_denominator()
-	).to_proper();
+	).to_proper().reduce();
 
 	/*Fraction result
 	(
@@ -140,8 +194,36 @@ Fraction operator*(Fraction left, Fraction right)
 	result.set_denominator(left.get_denominator()*right.get_denominator());
 	return result;*/
 }
+Fraction operator/(const Fraction& left, const Fraction& right)
+{
+	return left * right.inverted();	//Повторное использование кода
+}
+
+//				Comparison operators:
+bool operator==(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return left.get_numerator()*right.get_denominator() == right.get_numerator()*left.get_denominator();
+}
+
+std::ostream& operator<<(std::ostream& os, const Fraction& obj)
+{
+	if (obj.get_integer())os << obj.get_integer();
+	if (obj.get_numerator())
+	{
+		if (obj.get_integer())os << "(";
+		os << obj.get_numerator() << "/" << obj.get_denominator();
+		if (obj.get_integer())os << ")";
+	}
+	else if (obj.get_integer() == 0)os << 0;
+	return os;
+}
 
 //#define CONSTRUCTORS_CHECK
+//#define ARITHMETICAL_OPERATORS_CHECK
+//#define COMPOUND_ASSIGNMENTS_CHECK
+//#define INCREMENTO_DECREMENTO
 
 void main()
 {
@@ -168,6 +250,7 @@ void main()
 	F.print();
 #endif // CONSTRUCTORS_CHECK
 
+#ifdef ARITHMETICAL_OPERATORS_CHECK
 	Fraction A(2, 3, 4);
 	A.print();
 
@@ -178,7 +261,44 @@ void main()
 	A.print();
 	A.to_proper();
 	A.print();
-
-	Fraction C = A * B;
+	cout << delimiter << endl;
+	Fraction C = A / B;
+	cout << delimiter << endl;
 	C.print();
+#endif // ARITHMETICAL_OPERATORS_CHECK
+
+#ifdef COMPOUND_ASSIGNMENTS_CHECK
+	Fraction A(2, 3, 4);
+	Fraction B(3, 4, 5);
+	A *= B;
+	A.print();
+
+	A /= B;
+	A.print();
+#endif // COMPOUND_ASSIGNMENTS_CHECK
+
+#ifdef INCREMENTO_DECREMENTO
+	for (double i = .5; i < 10; i++)
+	{
+		cout << i << tab;
+	}
+	cout << endl;
+
+	for (Fraction i(1, 2); i.get_integer() < 10; i++)
+	{
+		i.print();
+	}
+
+	Fraction A(1, 2);
+	Fraction B = A++;
+	B.print();
+#endif // INCREMENTO_DECREMENTO
+
+	//cout << (2 == 2) << endl;
+	//cout << (Fraction(1, 2) == Fraction(5, 11)) << endl;
+
+	Fraction A(2, 3, 4);
+
+	cout << A << endl;
+
 }
