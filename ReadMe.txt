@@ -2,6 +2,9 @@
 https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 
 TODO:
+
+
+DONE:
 1. !!!!!	ТЕОРИЮ НАИЗУСТЬ		!!!!!
 2. ***Решить проблему в операторе '*';
 3. Перегрузить составные присваивания: +=, -=, *=, /=;

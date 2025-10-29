@@ -51,7 +51,7 @@ public:
 		denominator = 1;
 		cout << "DefaultConstrcutor:\t" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
 		this->integer = integer;
 		this->numerator = 0;
@@ -300,6 +300,9 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define INCREMENTO_DECREMENTO
 //#define STREAMS_CHECK_1
 //#define STREAMS_CHECK_2
+//#define TYPE_CONVERSIONS_BASICS
+//#define CONVERSIONS_FROM_OTHER_TO_CLASS
+#define HOME_WORK
 
 void main()
 {
@@ -391,8 +394,43 @@ void main()
 	cout << pa - pb << endl;*/
 #endif // STREAMS_CHECK_1
 
+#ifdef STREAMS_CHECK_2
 	Fraction A, B, C;
 	cout << "Введите три простых дроби: ";
 	cin >> A >> B >> C;
 	cout << A << tab << B << tab << C << endl;
+#endif // STREAMS_CHECK_2
+
+#ifdef TYPE_CONVERSIONS_BASICS
+	//(type)value;	//C-like notation		(C-подобная форма записи)
+	//type(value);	//Functional notation	(Функциональная форма записи)
+
+	int a = 2;		//No conversions
+	double b = a;	//Conversion from less to more
+	int c = b;		//Conversion from more to less without data loss
+	int d = 3.14;	//Conversion from more to less with data loss
+	//		l-value = r-value;
+	int e = 2 + 3.14;
+#endif // TYPE_CONVERSIONS_BASICS
+
+	//1)From other to Class - из других типов в наш тип;
+	//		Single-argument constructor;
+	//		Copy assignment
+	//2)From class to other - из нашего типа в другие типы;
+
+#ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
+	Fraction A = (Fraction)5;		//Conversion from 'int' to 'Fraction'
+	cout << A << endl;
+
+	Fraction B;
+	B = Fraction(8);	//Conversion from 'int' to 'Fraction'
+	cout << B << endl;
+#endif // CONVERSIONS_FROM_OTHER_TO_CLASS
+
+#ifdef HOME_WORK
+	Fraction A = 2.75;
+	cout << A << endl;
+#endif // HOME_WORK
+
+
 }
