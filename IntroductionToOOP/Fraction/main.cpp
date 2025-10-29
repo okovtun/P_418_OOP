@@ -432,5 +432,4 @@ void main()
 	cout << A << endl;
 #endif // HOME_WORK
 
-
 }
