@@ -58,6 +58,25 @@ public:
 		this->denominator = 1;
 		cout << "SingleArgumentConstrcutor:" << this << endl;
 	}
+	explicit Fraction(double decimal)
+	{
+		//0) Корректируем десятичную дробь:
+		decimal += 1e-10;
+
+		//1) Созраняем целую часть:
+		integer = decimal;	//Conversion from 'double' to 'int' with data loss
+
+		//2) Убираем целую часть из десятичной дроби:
+		decimal -= integer;
+
+		//3) Берем максимально-возможный знаменатель:
+		denominator = 1e+9;	//1*10^9;
+
+		//4) Вынимаем дробную часть десятичной дроби в числитель:
+		numerator = decimal * denominator;
+
+		reduce();
+	}
 	Fraction(int numerator, int denominator)
 	{
 		this->integer = 0;
@@ -121,6 +140,16 @@ public:
 		return old;
 	}
 
+	//				Type-cast operators:
+	explicit operator int()const
+	{
+		return integer + numerator / denominator;
+	}
+	operator double()const
+	{
+		return integer + (double)numerator / denominator;
+	}
+
 	//			Methods:
 	Fraction& to_improper()
 	{
@@ -147,6 +176,7 @@ public:
 		int more, less, rest = 0;
 		if (numerator > denominator)more = numerator, less = denominator;
 		else less = numerator, more = denominator;
+		if (less == 0)return *this;
 		do
 		{
 			rest = more % less;
@@ -215,16 +245,16 @@ bool operator>(Fraction left, Fraction right)
 {
 	left.to_improper();
 	right.to_improper();
-	return 
-		left.get_numerator()*right.get_denominator() > 
+	return
+		left.get_numerator()*right.get_denominator() >
 		right.get_numerator()*left.get_denominator();
 }
 bool operator<(Fraction left, Fraction right)
 {
 	left.to_improper();
 	right.to_improper();
-	return 
-		left.get_numerator()*right.get_denominator() < 
+	return
+		left.get_numerator()*right.get_denominator() <
 		right.get_numerator()*left.get_denominator();
 }
 bool operator>=(const Fraction& left, const Fraction& right)
@@ -269,7 +299,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	const char delimiters[] = "+()/";
 	int n = 0;
 	for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
-	{	
+	{
 		numbers[n++] = std::atoi(pch);	//atoi() - ANSI/ASCII to Int;
 		//cout << pch << "\t";
 	}
@@ -281,8 +311,8 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 	switch (n)
 	{
 	case 1:obj = Fraction(numbers[0]); break;
-	case 2:obj = Fraction(numbers[0],numbers[1]); break;
-	case 3:obj = Fraction(numbers[0],numbers[1],numbers[2]); break;
+	case 2:obj = Fraction(numbers[0], numbers[1]); break;
+	case 3:obj = Fraction(numbers[0], numbers[1], numbers[2]); break;
 	}
 
 	/*int integer;
@@ -302,7 +332,7 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 //#define STREAMS_CHECK_2
 //#define TYPE_CONVERSIONS_BASICS
 //#define CONVERSIONS_FROM_OTHER_TO_CLASS
-#define HOME_WORK
+//#define HOME_WORK
 
 void main()
 {
@@ -428,8 +458,37 @@ void main()
 #endif // CONVERSIONS_FROM_OTHER_TO_CLASS
 
 #ifdef HOME_WORK
-	Fraction A = 2.75;
+	//Fraction A = (Fraction)3.3333;
+	int a(2);
+	cout << a << endl;
+	Fraction A(3.3333);
 	cout << A << endl;
+
+	//Fraction B = (Fraction)8;	//Implicit conversion from 'int' to 'Fraction';
+	double b{ 3 };
+	cout << b << endl;
+	Fraction B{ 8 };
+	cout << B << endl;
 #endif // HOME_WORK
 
+	Fraction A(2, 33, 4);
+	cout << A << endl;
+	int a = (int)A;
+	cout << a << endl;
+
+	double b = A;
+	cout << b << endl;
+
 }
+
+/*
+-----------------------------------------------
+operator type()
+{
+	....;
+	conversion;
+	....;
+	return value;
+}
+-----------------------------------------------
+*/

@@ -2,6 +2,9 @@
 https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 
 TODO:
+1. !!!!!!! ПОВТОРИТЬ ПРИМИТИВНЫЕ ТИПЫ ДАННЫХ C++ !!!!!!!;
+
+TODO:
 1. !!!!!	ТЕОРИЮ НАИЗУСТЬ		!!!!!
 2. Проверочный код в секции HOME_WORK должен заработать:
 	https://github.com/okovtun/P_418_OOP/blob/02559b9addbf69d1a47406ee655b41d851f16387/IntroductionToOOP/Fraction/main.cpp#L430C1-L433C20
