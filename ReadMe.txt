@@ -6,7 +6,9 @@ TODO:
 0. !!!!!!! ПОВТОРИТЬ ПРИМИТИВНЫЕ ТИПЫ ДАННЫХ C++ !!!!!!!
 1. Почитать про Венгерскую нотацию:
 	https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%BE%D1%82%D0%B0%D1%86%D0%B8%D1%8F
-2. В Solution 'IntroductionToOOP' добавить проект 'String',
+2. Написа функцию isIPaddressTok() используя функцию strtok():
+	https://legacy.cplusplus.com/reference/cstring/strtok/
+3. В Solution 'IntroductionToOOP' добавить проект 'String',
    и в этом проекте реализовать класс 'String', который описывает строку.
 	Строка - это самый обычный массив элементов char, 
 	последним элементом корого всегда является ASCII-символ с кодом 0 - '\0',
