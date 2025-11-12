@@ -1,19 +1,22 @@
 ﻿https://github.com/okovtun/P_418_OOP.git
 https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 
-TODO:
-В Solution 'IntroductionToOOP' добавить проект 'NULLTerminatedLines',
-и перенести в него весь код из проекта 'String';
 
 TODO:
-1. !!!!!!! ПОВТОРИТЬ ПРИМИТИВНЫЕ ТИПЫ ДАННЫХ C++ !!!!!!!
+0. !!!!!!! ПОВТОРИТЬ ПРИМИТИВНЫЕ ТИПЫ ДАННЫХ C++ !!!!!!!
+1. Почитать про Венгерскую нотацию:
+	https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%BE%D1%82%D0%B0%D1%86%D0%B8%D1%8F
 2. В Solution 'IntroductionToOOP' добавить проект 'String',
    и в этом проекте реализовать класс 'String', который описывает строку.
 	Строка - это самый обычный массив элементов char, 
 	последним элементом корого всегда является ASCII-символ с кодом 0 - '\0',
 	который представляет собой самый обычный физический 0.
 
-TODO:
+DONE:
+В Solution 'IntroductionToOOP' добавить проект 'NULLTerminatedLines',
+и перенести в него весь код из проекта 'String';
+
+DONE:
 Реализовать следующие функции:
 	??? StringLength(???);	//возвращает длину строки				DONE
 	??? ToUpper(???);		//переводит строку в верхний регистр	DONE
