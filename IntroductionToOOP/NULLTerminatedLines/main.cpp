@@ -23,6 +23,7 @@ int hex_to_dec(const char str[]);
 
 bool isMACaddress(const char str[]);
 bool isIPaddress(const char str[]);
+bool isIPaddressTok(const char str[]);
 
 //NULL Terminated Lines
 //#define LINES_BASICS_1
@@ -86,6 +87,7 @@ void main()
 	cout << isMACaddress("4c-77-cb-e4-e8-2c") << endl;
 	cout << isIPaddress("192.-16.100.1") << endl;
 	cout << isIPaddress("8.8.8.8") << endl;
+	cout << isIPaddressTok("192.-16.100.1") << endl;
 }
 
 int StringLength(const char str[])
@@ -280,4 +282,26 @@ bool isIPaddress(const char str[])
 		}
 	}
 	return points_count == 3 ? true : false;
+}
+bool isIPaddressTok(const char str[])
+{
+	//char* strtok(char* str, const char* delimisters)
+	//str - входная строка, которую нужно разделить на токены
+	//delimiters - разделители
+	NULL;
+	int size = strlen(str);
+	if (size < 7 || size > 15)return false;
+	char* buffer = new char[size + 1]{};
+	strcpy(buffer, str);	//Копируем 'str' в 'buffer'
+	int n = 0;
+	unsigned int bytes[4] = {};
+	for (char* pch = strtok(buffer, "."); pch; pch = strtok(NULL, "."))
+		bytes[n++] = std::atoi(pch);	//atoi() - ANSI/ASCII to INT (преобразует строку в число)
+	//В pch (Pointer to char) сохраняется указатель на токен, а delimiter,
+	//следующий за токеном заменяется на 0.
+	delete[] buffer;
+	if (n < 4)return false;
+	for (int i = 0; i < n; i++)
+		if (bytes[i] > 255)return false;
+	return true;
 }
