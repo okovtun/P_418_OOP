@@ -64,6 +64,16 @@ public:
 		return *this;
 	}
 
+	char operator[](int i)const
+	{
+		return str[i];
+	}
+	char& operator[](int i)
+	{
+		return str[i];
+	}
+
+
 	//				Methods:
 	void print()const
 	{
@@ -76,10 +86,14 @@ String operator+(const String& left, const String& right)
 {
 	//Сложение строк - Конкатенация строк:
 	String result(left.get_size() + right.get_size() - 1);
+	const double PI = 3.14;
+	//PI = 2.7;
 	for (int i = 0; i < left.get_size(); i++)
-		result.get_str()[i] = left.get_str()[i];
+		result[i] = left[i];
+		//result.get_str()[i] = left.get_str()[i];
 	for (int i = 0; i < right.get_size(); i++)
-		result.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+		result[i + left.get_size() - 1] = right[i];
+		//result.get_str()[i + left.get_size() - 1] = right.get_str()[i];
 	return result;
 }
 
