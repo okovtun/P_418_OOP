@@ -43,7 +43,22 @@ public:
 		this->size = other.size;
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyConstructor:\t" << this << endl;
+		cout << "CopyConstructor:" << this << endl;
+	}
+	String(String&& other)
+	{
+		//String&& - r-value reference
+
+		//Shallow copy - поверхностное копирование:
+		this->size = other.size;
+		this->str = other.str;
+
+		//Обязательно нужно обнулить копируемый объект:
+		other.size = 0;
+		other.str = nullptr;
+		//это предотвращает удаление динамической памяти деструктором.
+
+		cout << "MoveConstructor:" << this << endl;
 	}
 	~String()
 	{
@@ -95,6 +110,8 @@ String operator+(const String& left, const String& right)
 		result[i + left.get_size() - 1] = right[i];
 		//result.get_str()[i + left.get_size() - 1] = right.get_str()[i];
 	return result;
+	//0x00e12640
+	//r-value reference
 }
 
 std::ostream& operator<<(std::ostream& os, const String& obj)
@@ -133,7 +150,11 @@ void main()
 	a + b;
 	String str1 = "Hello";
 	String str2 = "World";
+
+	cout << delimiter << endl;
 	String str3 = str1 + str2;
+	cout << delimiter << endl;
+	
 	cout << str3 << endl;
 #endif // OPERATORS_CHECK
 
@@ -143,3 +164,7 @@ void main()
 //Shallow copy
 //Debug Assertion Failed
 //Memory Leak
+
+//Move semantic:
+//Move constructor
+//Move assignment

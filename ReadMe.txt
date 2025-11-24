@@ -2,7 +2,14 @@
 https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 
 TODO:
-1. В классе 'String' написать и проверить CopyAssignment;		//DONE
+1. Написать и проветрить MoveAssignment;
+2. Почитать:
+	https://legacy.cplusplus.com/doc/tutorial/classes2/
+3. Почитать:
+	https://learn.microsoft.com/en-us/cpp/build/reference/zc-nrvo?view=msvc-170
+
+DONE:
+1. В классе 'String' написать и проверить CopyAssignment;		DONE
 2. Код в секции 'OPERATORS_CHECK' должен заработать:
 	https://github.com/okovtun/P_418_OOP/blob/f69e273b959b37156fc4c1e8fdf5910f6f74a339/IntroductionToOOP/String/main.cpp#L82C1-L87C26
 
