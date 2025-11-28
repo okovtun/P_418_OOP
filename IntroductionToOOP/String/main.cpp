@@ -25,24 +25,21 @@ public:
 	}
 
 	//				Constructors:
-	explicit String(int size = 80) :size(size), str(new char[size] {})
+	explicit String(int size = 80) :
+		size(size), 
+		str(new char[size] {})
 	{
 		//this->size = size;
 		//this->str = new char[size] {};
 		cout << "DefConstructor:\t" << this << endl;
 	}
-	String(const char str[]) :size(strlen(str) + 1), str(new char[size] {})
+	String(const char str[]) :String(strlen(str)+1)
 	{
-		//this->size = strlen(str) + 1;
-		//this->str = new char[size] {};
 		for (int i = 0; str[i]; i++)this->str[i] = str[i];
 		cout << "Constructor:\t" << this << endl;
 	}
-	String(const String& other) :size(other.size), str(new char[size] {})
+	String(const String& other) :String(other.str)
 	{
-		//this->size = other.size;
-		//this->str = new char[size] {};
-		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:" << this << endl;
 	}
 	String(String&& other)
@@ -135,8 +132,8 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 }
 
 //#define BASE_CHECK
-//#define OPERATORS_CHECK
-#define CALLING_CONSTRUCTORS
+#define OPERATORS_CHECK
+//#define CALLING_CONSTRUCTORS
 
 void main()
 {
@@ -205,6 +202,7 @@ void main()
 	String str9 = str3;	//CopyConstructor
 	String str10(str9);	//CopyConstrcutor
 	String str11{ str9 };//CopyConstructor
+	str11.print();
 
 	String str12 = str3 + str7;	//MoveConstructor
 	str12.print();
