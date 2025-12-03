@@ -1,0 +1,224 @@
+#include<iostream>
+#include<string>
+using std::cin;
+using std::cout;
+using std::endl;
+
+class Human
+{
+	std::string last_name;
+	std::string first_name;
+	int age;
+public:
+	const std::string& get_last_name()const
+	{
+		return last_name;
+	}
+	const std::string& get_first_name()const
+	{
+		return first_name;
+	}
+	int get_age()const
+	{
+		return age;
+	}
+	void set_last_name(const std::string& last_name)
+	{
+		this->last_name = last_name;
+	}
+	void set_first_name(const std::string& first_name)
+	{
+		this->first_name = first_name;
+	}
+	void set_age(int age)
+	{
+		this->age = age;
+	}
+	//				Constructors:
+	Human(const std::string& last_name, const std::string& first_name, int age)
+	{
+		set_last_name(last_name);
+		set_first_name(first_name);
+		set_age(age);
+		cout << "HConstructor:\t" << this << endl;
+	}
+	~Human()
+	{
+		cout << "HDestructor:\t" << this << endl;
+	}
+	virtual void info()const
+	{
+		cout << last_name << " " << first_name << " " << age << endl;
+	}
+};
+
+class AcademyMember :public Human
+{
+	std::string speciality;
+public:
+	const std::string& get_speciality()const
+	{
+		return speciality;
+	}
+	void set_speciality(const std::string& speciality)
+	{
+		this->speciality = speciality;
+	}
+	//				Constructors:
+	AcademyMember
+	(
+		const std::string& last_name, const std::string& first_name, int age,
+		const std::string& speciality
+	) :Human(last_name, first_name, age)
+	{
+		set_speciality(speciality);
+		cout << "AMConstructor:\t" << this << endl;
+	}
+	~AcademyMember()
+	{
+		cout << "AMDestructor:\t" << this << endl;
+	}
+
+	//				Methods:
+	void info()const
+	{
+		Human::info();
+		cout << speciality << endl;
+	}
+};
+
+class Student :public AcademyMember
+{
+	std::string group;
+	double rating;
+	double attendance;
+public:
+	const std::string& get_group()const
+	{
+		return group;
+	}
+	double get_rating()const
+	{
+		return rating;
+	}
+	double get_attendance()const
+	{
+		return attendance;
+	}
+	void set_group(const std::string& group)
+	{
+		this->group = group;
+	}
+	void set_rating(double rating)
+	{
+		this->rating = rating;
+	}
+	void set_attendance(double attendance)
+	{
+		this->attendance = attendance;
+	}
+
+	//				Constructors:
+	Student
+	(
+		const std::string& last_name, const std::string& first_name, int age,
+		const std::string& speciality,
+		const std::string& group, double rating, double attendance
+	) :AcademyMember(last_name, first_name, age, speciality)
+	{
+		set_group(group);
+		set_rating(rating);
+		set_attendance(attendance);
+		cout << "SConstructor:\t" << this << endl;
+	}
+	~Student()
+	{
+		cout << "SDestructor:\t" << this << endl;
+	}
+
+	//					Methods:
+	void info()const
+	{
+		AcademyMember::info();
+		cout << group << " " << rating << " " << attendance << endl;
+	}
+};
+
+class Teacher :public AcademyMember
+{
+	int experience;
+public:
+	int get_experience()const
+	{
+		return experience;
+	}
+	void set_experience(int experience)
+	{
+		this->experience = experience;
+	}
+	//			Constructors:
+	Teacher
+	(
+		const std::string& last_name, const std::string& first_name, int age,
+		const std::string& speciality,
+		int experience
+	) :AcademyMember(last_name, first_name, age, speciality)
+	{
+		set_experience(experience);
+		cout << "TConstrcutor:\t" << this << endl;
+	}
+	~Teacher()
+	{
+		cout << "TDestructor:\t" << this << endl;
+	}
+
+	//			Methods:
+	void info()const
+	{
+		AcademyMember::info();
+		cout << experience << endl;
+	}
+};
+
+//#define INHERITANCE
+
+void main()
+{
+	setlocale(LC_ALL, "");
+
+#ifdef INHERITANCE
+	//Human human("Einstein", "Albert", 146);
+//human.info();
+
+	AcademyMember albert("Einstein", "Albert", 146, "Astronomy");
+	albert.info();
+
+	Student student("Щербаков", "Илья", 15, "Разработка программного обеспечения", "P_418", 100, 99.9);
+	student.info();
+
+	Teacher teacher("Einstein", "Albert", 146, "Astronomy", 120);
+	teacher.info();
+#endif // INHERITANCE
+
+	//Polymorphism (многоформенность: poly-много, morphis-форма)
+	/*
+		Runtime polymorhism:
+			1. Base class pointers;
+			2. Virtual functions (methods);
+	*/
+
+	Human* group[] =
+	{
+		new Student("Кондратенко", "Георний", 18, "РПО", "P_418", 97, 98),
+		new Teacher("Stanne", "Michael", 55, "Vocals", 40),
+		new Student("Щербаков", "Илья", 15, "РПО", "P_418", 100, 99.9),
+		new Teacher("Henriksson", "Matrin", 50, "Bass", 40),
+		new Student("Тетевосян", "Элеонора", 17, "РПО", "P_418", 98, 48)
+	};
+
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		//group[i]->info();
+		cout << *group[i] << endl;
+	}
+}
