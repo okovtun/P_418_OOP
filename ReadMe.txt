@@ -2,6 +2,15 @@
 https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 
 TODO:
+1. Выучить теорию по наследованию;
+2. Цикл должен выводить полную информацию об участниках группы:
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		//group[i]->info();
+		cout << *group[i] << endl;
+	}
+
+DONE:
 1. Выучить теорию по наследованию.
 2. Написать класс 'Graduate', описывающий дипломника;
 3. Участники группы должны выводиться на экран при помощи 'cout':
