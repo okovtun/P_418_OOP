@@ -4,6 +4,9 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+#define tab "\t"
+#define delimiter "\n-------------------------------------------------------\n"
+
 class Human
 {
 	std::string last_name;
@@ -80,7 +83,7 @@ public:
 	}
 
 	//				Methods:
-	void info()const
+	void info()const override
 	{
 		Human::info();
 		cout << speciality << endl;
@@ -137,7 +140,7 @@ public:
 	}
 
 	//					Methods:
-	void info()const
+	void info()const override
 	{
 		AcademyMember::info();
 		cout << group << " " << rating << " " << attendance << endl;
@@ -173,10 +176,44 @@ public:
 	}
 
 	//			Methods:
-	void info()const
+	void info()const override
 	{
 		AcademyMember::info();
 		cout << experience << endl;
+	}
+};
+class Graduate :public Student
+{
+	std::string subject;
+public:
+	const std::string& get_subject()const
+	{
+		return subject;
+	}
+	void set_subject(const std::string& subject)
+	{
+		this->subject = subject;
+	}
+	//			Constructors:
+	Graduate
+	(
+		const std::string& last_name, const std::string& first_name, int age,
+		const std::string& speciality,
+		const std::string& group, double rating, double attendance,
+		const std::string& subject
+	):Student(last_name, first_name,age,speciality,group,rating,attendance)
+	{
+		set_subject(subject);
+		cout << "GConstructor:\t" << this << endl;
+	}
+	~Graduate()
+	{
+		cout << "GDestructor:\t" << this << endl;
+	}
+	void info()const override
+	{
+		Student::info();
+		cout << subject << endl;
 	}
 };
 
@@ -213,12 +250,14 @@ void main()
 		new Teacher("Stanne", "Michael", 55, "Vocals", 40),
 		new Student("Щербаков", "Илья", 15, "РПО", "P_418", 100, 99.9),
 		new Teacher("Henriksson", "Matrin", 50, "Bass", 40),
-		new Student("Тетевосян", "Элеонора", 17, "РПО", "P_418", 98, 48)
+		new Student("Тетевосян", "Элеонора", 17, "РПО", "P_418", 98, 48),
+		new Graduate("Пензин", "Богдан", 15, "РПО", "P_418", 98, 99, "Мнение и этическая позиция подростков на развитие искуственного интеллекта (AGI - Artificial General Intelligence)")
 	};
 
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
-		//group[i]->info();
-		cout << *group[i] << endl;
+		group[i]->info();
+		cout << delimiter << endl;
+		//cout << *group[i] << endl;
 	}
 }
