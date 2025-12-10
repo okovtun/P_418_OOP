@@ -287,6 +287,8 @@ void main()
 		cout << delimiter << endl;
 		//cout << *dynamic_cast<AcademyMember*>(group[i]) << endl;
 		cout << typeid(*group[i]).name() << ":\t";
+		//Downcast - приведение базового типа к дочернему типу:
+		//
 		if (typeid(*group[i]) == typeid(Student))cout << *dynamic_cast<Student*>(group[i]) << endl;
 		if (typeid(*group[i]) == typeid(Teacher))cout << *dynamic_cast<Teacher*>(group[i]) << endl;
 		if (typeid(*group[i]) == typeid(Graduate))cout << *dynamic_cast<Graduate*>(group[i]) << endl;
