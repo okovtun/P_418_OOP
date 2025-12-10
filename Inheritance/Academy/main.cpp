@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<string>
 using std::cin;
 using std::cout;
@@ -257,14 +257,14 @@ void main()
 	AcademyMember albert("Einstein", "Albert", 146, "Astronomy");
 	albert.info();
 
-	Student student("Щербаков", "Илья", 15, "Разработка программного обеспечения", "P_418", 100, 99.9);
+	Student student("Р©РµСЂР±Р°РєРѕРІ", "РР»СЊСЏ", 15, "Р Р°Р·СЂР°Р±РѕС‚РєР° РїСЂРѕРіСЂР°РјРјРЅРѕРіРѕ РѕР±РµСЃРїРµС‡РµРЅРёСЏ", "P_418", 100, 99.9);
 	student.info();
 
 	Teacher teacher("Einstein", "Albert", 146, "Astronomy", 120);
 	teacher.info();
 #endif // INHERITANCE
 
-	//Polymorphism (многоформенность: poly-много, morphis-форма)
+	//Polymorphism (РјРЅРѕРіРѕС„РѕСЂРјРµРЅРЅРѕСЃС‚СЊ: poly-РјРЅРѕРіРѕ, morphis-С„РѕСЂРјР°)
 	/*
 		Runtime polymorhism:
 			1. Base class pointers;
@@ -273,12 +273,12 @@ void main()
 
 	Human* group[] =
 	{
-		new Student("Кондратенко", "Георний", 18, "РПО", "P_418", 97, 98),
+		new Student("РљРѕРЅРґСЂР°С‚РµРЅРєРѕ", "Р“РµРѕСЂРЅРёР№", 18, "Р РџРћ", "P_418", 97, 98),
 		new Teacher("Stanne", "Michael", 55, "Vocals", 40),
-		new Student("Щербаков", "Илья", 15, "РПО", "P_418", 100, 99.9),
+		new Student("Р©РµСЂР±Р°РєРѕРІ", "РР»СЊСЏ", 15, "Р РџРћ", "P_418", 100, 99.9),
 		new Teacher("Henriksson", "Matrin", 50, "Bass", 40),
-		new Student("Тетевосян", "Элеонора", 17, "РПО", "P_418", 98, 48),
-		new Graduate("Пензин", "Богдан", 15, "РПО", "P_418", 98, 99, "Мнение и этическая позиция подростков на развитие искуственного интеллекта (AGI - Artificial General Intelligence)")
+		new Student("РўРµС‚РµРІРѕСЃСЏРЅ", "Р­Р»РµРѕРЅРѕСЂР°", 17, "Р РџРћ", "P_418", 98, 48),
+		new Graduate("РџРµРЅР·РёРЅ", "Р‘РѕРіРґР°РЅ", 15, "Р РџРћ", "P_418", 98, 99, "РњРЅРµРЅРёРµ Рё СЌС‚РёС‡РµСЃРєР°СЏ РїРѕР·РёС†РёСЏ РїРѕРґСЂРѕСЃС‚РєРѕРІ РЅР° СЂР°Р·РІРёС‚РёРµ РёСЃРєСѓСЃС‚РІРµРЅРЅРѕРіРѕ РёРЅС‚РµР»Р»РµРєС‚Р° (AGI - Artificial General Intelligence)")
 	};
 
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
@@ -287,13 +287,13 @@ void main()
 		cout << delimiter << endl;
 		//cout << *dynamic_cast<AcademyMember*>(group[i]) << endl;
 		cout << typeid(*group[i]).name() << ":\t";
-		//Downcast - приведение базового типа к дочернему типу:
+		//Downcast - РїСЂРёРІРµРґРµРЅРёРµ Р±Р°Р·РѕРІРѕРіРѕ С‚РёРїР° Рє РґРѕС‡РµСЂРЅРµРјСѓ С‚РёРїСѓ:
 		//
 		if (typeid(*group[i]) == typeid(Student))cout << *dynamic_cast<Student*>(group[i]) << endl;
 		if (typeid(*group[i]) == typeid(Teacher))cout << *dynamic_cast<Teacher*>(group[i]) << endl;
 		if (typeid(*group[i]) == typeid(Graduate))cout << *dynamic_cast<Graduate*>(group[i]) << endl;
 	}
-	5;	//Числовая константа типа 'int'.
+	5;	//Р§РёСЃР»РѕРІР°СЏ РєРѕРЅСЃС‚Р°РЅС‚Р° С‚РёРїР° 'int'.
 	cout << sizeof(5) << endl;
 	cout << typeid(5).name() << endl;
 	cout << typeid(3.14).name() << endl;
