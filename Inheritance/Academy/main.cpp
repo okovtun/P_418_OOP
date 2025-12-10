@@ -244,6 +244,8 @@ void main()
 			2. Virtual functions (methods);
 	*/
 
+	//Generalization - Обобщение
+	//Upcast - преобразование дочернего объекта к базовому типу.
 	Human* group[] =
 	{
 		new Student("Кондратенко", "Георний", 18, "РПО", "P_418", 97, 98),
@@ -254,6 +256,9 @@ void main()
 		new Graduate("Пензин", "Богдан", 15, "РПО", "P_418", 98, 99, "Мнение и этическая позиция подростков на развитие искуственного интеллекта (AGI - Artificial General Intelligence)")
 	};
 
+	// __vfptr (Virtual Functions Pointers) - Таблица указателей на виртуальные функции.
+	//Specialization - уточнение
+	//Downcast - приведение базового типа к дочернему.
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
 		group[i]->info();
