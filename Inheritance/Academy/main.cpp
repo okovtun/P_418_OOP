@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<string>
 using std::cin;
 using std::cout;
@@ -49,11 +49,19 @@ public:
 	{
 		cout << "HDestructor:\t" << this << endl;
 	}
-	virtual void info()const
+	virtual std::ostream& info(std::ostream& os)const
 	{
-		cout << last_name << " " << first_name << " " << age << endl;
+		return os << last_name << " " << first_name << " " << age << endl;
 	}
 };
+
+std::ostream& operator<<(std::ostream& os, const Human& obj)
+{
+	//os - Output stream
+	return obj.info(os);
+	//obj.info();
+	//return os << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age();
+}
 
 class AcademyMember :public Human
 {
@@ -83,10 +91,10 @@ public:
 	}
 
 	//				Methods:
-	void info()const override
+	std::ostream& info(std::ostream& os)const override
 	{
-		Human::info();
-		cout << speciality << endl;
+		Human::info(os);
+		return os << speciality << endl;
 	}
 };
 
@@ -140,10 +148,13 @@ public:
 	}
 
 	//					Methods:
-	void info()const override
+	std::ostream& info(std::ostream& os)const override
 	{
-		AcademyMember::info();
-		cout << group << " " << rating << " " << attendance << endl;
+		AcademyMember::info(os);
+		/*
+		:: - ÐžÐ¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€ Ñ€Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ð¸Ñ Ð²Ð¸Ð´Ð¸Ð¼Ð¾ÑÑ‚Ð¸ (Scope operator), Ð¿Ð¾ÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÑ‚, Ð² ÐºÐ°ÐºÐ¾Ð¹ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸ Ð²Ð¸Ð´Ð¸Ð¼Ð¾Ñ€ÑÑ‚Ð¸ Ð¾Ð±ÑŠÑÐ²Ð»ÐµÐ½ Ð¸Ð´ÐµÐ½Ñ‚Ð¸Ñ„Ð¸ÐºÐ°Ñ‚Ð¾Ñ€ (Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ, ÐºÐ¾Ð½ÑÑ‚Ð°Ð½Ñ‚Ð°, Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ð°Ñ Ð¸ Ñ‚.Ð´.)
+		*/
+		return os << group << " " << rating << " " << attendance << endl;
 	}
 };
 
@@ -176,10 +187,10 @@ public:
 	}
 
 	//			Methods:
-	void info()const override
+	std::ostream& info(std::ostream& os)const override
 	{
-		AcademyMember::info();
-		cout << experience << endl;
+		AcademyMember::info(os);
+		return os << experience << endl;
 	}
 };
 class Graduate :public Student
@@ -210,10 +221,10 @@ public:
 	{
 		cout << "GDestructor:\t" << this << endl;
 	}
-	void info()const override
+	std::ostream& info(std::ostream& os)const override
 	{
-		Student::info();
-		cout << subject << endl;
+		Student::info(os);
+		return os << subject << endl;
 	}
 };
 
@@ -230,39 +241,39 @@ void main()
 	AcademyMember albert("Einstein", "Albert", 146, "Astronomy");
 	albert.info();
 
-	Student student("Ùåðáàêîâ", "Èëüÿ", 15, "Ðàçðàáîòêà ïðîãðàììíîãî îáåñïå÷åíèÿ", "P_418", 100, 99.9);
+	Student student("Ð©ÐµÑ€Ð±Ð°ÐºÐ¾Ð²", "Ð˜Ð»ÑŒÑ", 15, "Ð Ð°Ð·Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ð½Ð¾Ð³Ð¾ Ð¾Ð±ÐµÑÐ¿ÐµÑ‡ÐµÐ½Ð¸Ñ", "P_418", 100, 99.9);
 	student.info();
 
 	Teacher teacher("Einstein", "Albert", 146, "Astronomy", 120);
 	teacher.info();
 #endif // INHERITANCE
 
-	//Polymorphism (ìíîãîôîðìåííîñòü: poly-ìíîãî, morphis-ôîðìà)
+	//Polymorphism (Ð¼Ð½Ð¾Ð³Ð¾Ñ„Ð¾Ñ€Ð¼ÐµÐ½Ð½Ð¾ÑÑ‚ÑŒ: poly-Ð¼Ð½Ð¾Ð³Ð¾, morphis-Ñ„Ð¾Ñ€Ð¼Ð°)
 	/*
 		Runtime polymorhism:
 			1. Base class pointers;
 			2. Virtual functions (methods);
 	*/
 
-	//Generalization - Îáîáùåíèå
-	//Upcast - ïðåîáðàçîâàíèå äî÷åðíåãî îáúåêòà ê áàçîâîìó òèïó.
+	//Generalization - ÐžÐ±Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ
+	//Upcast - Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð´Ð¾Ñ‡ÐµÑ€Ð½ÐµÐ³Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° Ðº Ð±Ð°Ð·Ð¾Ð²Ð¾Ð¼Ñƒ Ñ‚Ð¸Ð¿Ñƒ.
 	Human* group[] =
 	{
-		new Student("Êîíäðàòåíêî", "Ãåîðíèé", 18, "ÐÏÎ", "P_418", 97, 98),
+		new Student("ÐšÐ¾Ð½Ð´Ñ€Ð°Ñ‚ÐµÐ½ÐºÐ¾", "Ð“ÐµÐ¾Ñ€Ð½Ð¸Ð¹", 18, "Ð ÐŸÐž", "P_418", 97, 98),
 		new Teacher("Stanne", "Michael", 55, "Vocals", 40),
-		new Student("Ùåðáàêîâ", "Èëüÿ", 15, "ÐÏÎ", "P_418", 100, 99.9),
+		new Student("Ð©ÐµÑ€Ð±Ð°ÐºÐ¾Ð²", "Ð˜Ð»ÑŒÑ", 15, "Ð ÐŸÐž", "P_418", 100, 99.9),
 		new Teacher("Henriksson", "Matrin", 50, "Bass", 40),
-		new Student("Òåòåâîñÿí", "Ýëåîíîðà", 17, "ÐÏÎ", "P_418", 98, 48),
-		new Graduate("Ïåíçèí", "Áîãäàí", 15, "ÐÏÎ", "P_418", 98, 99, "Ìíåíèå è ýòè÷åñêàÿ ïîçèöèÿ ïîäðîñòêîâ íà ðàçâèòèå èñêóñòâåííîãî èíòåëëåêòà (AGI - Artificial General Intelligence)")
+		new Student("Ð¢ÐµÑ‚ÐµÐ²Ð¾ÑÑÐ½", "Ð­Ð»ÐµÐ¾Ð½Ð¾Ñ€Ð°", 17, "Ð ÐŸÐž", "P_418", 98, 48),
+		new Graduate("ÐŸÐµÐ½Ð·Ð¸Ð½", "Ð‘Ð¾Ð³Ð´Ð°Ð½", 15, "Ð ÐŸÐž", "P_418", 98, 99, "ÐœÐ½ÐµÐ½Ð¸Ðµ Ð¸ ÑÑ‚Ð¸Ñ‡ÐµÑÐºÐ°Ñ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ñ Ð¿Ð¾Ð´Ñ€Ð¾ÑÑ‚ÐºÐ¾Ð² Ð½Ð° Ñ€Ð°Ð·Ð²Ð¸Ñ‚Ð¸Ðµ Ð¸ÑÐºÑƒÑÑ‚Ð²ÐµÐ½Ð½Ð¾Ð³Ð¾ Ð¸Ð½Ñ‚ÐµÐ»Ð»ÐµÐºÑ‚Ð° (AGI - Artificial General Intelligence)")
 	};
 
-	// __vfptr (Virtual Functions Pointers) - Òàáëèöà óêàçàòåëåé íà âèðòóàëüíûå ôóíêöèè.
-	//Specialization - óòî÷íåíèå
-	//Downcast - ïðèâåäåíèå áàçîâîãî òèïà ê äî÷åðíåìó.
+	// __vfptr (Virtual Functions Pointers) - Ð¢Ð°Ð±Ð»Ð¸Ñ†Ð° ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÐµÐ¹ Ð½Ð° Ð²Ð¸Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ñ‹Ðµ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸.
+	//Specialization - ÑƒÑ‚Ð¾Ñ‡Ð½ÐµÐ½Ð¸Ðµ
+	//Downcast - Ð¿Ñ€Ð¸Ð²ÐµÐ´ÐµÐ½Ð¸Ðµ Ð±Ð°Ð·Ð¾Ð²Ð¾Ð³Ð¾ Ñ‚Ð¸Ð¿Ð° Ðº Ð´Ð¾Ñ‡ÐµÑ€Ð½ÐµÐ¼Ñƒ.
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
-		group[i]->info();
-		cout << delimiter << endl;
-		//cout << *group[i] << endl;
+		//group[i]->info();
+		//cout << delimiter << endl;
+		cout << *group[i] << endl;
 	}
 }
