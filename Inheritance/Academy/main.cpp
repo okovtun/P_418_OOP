@@ -51,7 +51,7 @@ public:
 	}
 	virtual std::ostream& info(std::ostream& os)const
 	{
-		return os << last_name << " " << first_name << " " << age << endl;
+		return os << last_name << " " << first_name << " " << age;
 	}
 };
 
@@ -93,8 +93,9 @@ public:
 	//				Methods:
 	std::ostream& info(std::ostream& os)const override
 	{
-		Human::info(os);
-		return os << speciality << endl;
+		return Human::info(os) << " " << speciality;
+		//Human::info(os);
+		//return os << speciality << endl;
 	}
 };
 
@@ -150,11 +151,12 @@ public:
 	//					Methods:
 	std::ostream& info(std::ostream& os)const override
 	{
-		AcademyMember::info(os);
+		return AcademyMember::info(os) << " " << group << " " << rating << " " << attendance;
+		//AcademyMember::info(os);
 		/*
 		:: - Оператор разрешения видимости (Scope operator), показывает, в какой области видиморсти объявлен идентификатор (функция, константа, переменная и т.д.)
 		*/
-		return os << group << " " << rating << " " << attendance << endl;
+		//return os << group << " " << rating << " " << attendance << endl;
 	}
 };
 
@@ -189,8 +191,9 @@ public:
 	//			Methods:
 	std::ostream& info(std::ostream& os)const override
 	{
-		AcademyMember::info(os);
-		return os << experience << endl;
+		return AcademyMember::info(os) << " " << experience;
+		//AcademyMember::info(os);
+		//return os << experience << endl;
 	}
 };
 class Graduate :public Student
@@ -223,8 +226,9 @@ public:
 	}
 	std::ostream& info(std::ostream& os)const override
 	{
-		Student::info(os);
-		return os << subject << endl;
+		return Student::info(os) << " " << subject;
+		//Student::info(os);
+		//return os << subject << endl;
 	}
 };
 
