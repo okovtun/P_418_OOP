@@ -4,6 +4,9 @@ https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 TODO:
 1. Из файла '201 RAW.txt' создать файл '201 WOL.txt', 
    в котором столбцы с IP-адресом и MAC-адресом поменяны местами;
+	https://github.com/okovtun/P_418_OOP/blob/master/Inheritance/WOL/201%20RAW.txt
+2. Из файла '201 RAW.txt' создать файл '201.dhcpd', который должен вынлядеть
+   следующим образом:
 	
 
 DONE:
