@@ -7,7 +7,9 @@ TODO:
 	https://github.com/okovtun/P_418_OOP/blob/master/Inheritance/WOL/201%20RAW.txt
 2. Из файла '201 RAW.txt' создать файл '201.dhcpd', который должен вынлядеть
    следующим образом:
-	
+	https://github.com/okovtun/P_418_OOP/blob/master/Inheritance/Task/201.dhcpd.txt
+3. В проекте 'Academy' сохранить группу в файл;
+4. В проекте 'Academy' загрузить группу из файла;
 
 DONE:
 1. Выучить теорию по наследованию.
