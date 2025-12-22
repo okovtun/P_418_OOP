@@ -68,7 +68,6 @@ void main()
 			fout << "\tfixed-address\t\t" << sz_IP_buffer << ";\n";
 			fout << "}\n";
 			fout << endl;
-
 		}
 	}
 	else

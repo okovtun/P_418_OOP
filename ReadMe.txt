@@ -5,10 +5,10 @@ https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%BE%D1%82%D0%B0%D1%86%D0%B8%D1%8F
 
 TODO:
-1. Из файла '201 RAW.txt' создать файл '201 WOL.txt', 
+1. Из файла '201 RAW.txt' создать файл '201 WOL.txt',				DONE
    в котором столбцы с IP-адресом и MAC-адресом поменяны местами;
 	https://github.com/okovtun/P_418_OOP/blob/master/Inheritance/WOL/201%20RAW.txt
-2. Из файла '201 RAW.txt' создать файл '201.dhcpd', который должен вынлядеть
+2. Из файла '201 RAW.txt' создать файл '201.dhcpd', который должен вынлядеть	DONE
    следующим образом:
 	https://github.com/okovtun/P_418_OOP/blob/master/Inheritance/Task/201.dhcpd.txt
 3. В проекте 'Academy' сохранить группу в файл;
