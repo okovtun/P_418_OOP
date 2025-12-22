@@ -1,4 +1,5 @@
 ﻿#include<iostream>
+#include<fstream>
 #include<string>
 using std::cin;
 using std::cout;
@@ -250,7 +251,7 @@ public:
 		const std::string& speciality,
 		const std::string& group, double rating, double attendance,
 		const std::string& subject
-	):Student(last_name, first_name,age,speciality,group,rating,attendance)
+	) :Student(last_name, first_name, age, speciality, group, rating, attendance)
 	{
 		set_subject(subject);
 		cout << "GConstructor:\t" << this << endl;
@@ -266,6 +267,19 @@ public:
 		//return os << subject << endl;
 	}
 };
+
+void Print(Human* group[], const int n)
+{
+	// __vfptr (Virtual Functions Pointers) - Таблица указателей на виртуальные функции.
+	//Specialization - уточнение
+	//Downcast - приведение базового типа к дочернему.
+	for (int i = 0; i < n; i++)
+	{
+		//group[i]->info();
+		//cout << delimiter << endl;
+		cout << *group[i] << endl;
+	}
+}
 
 //#define INHERITANCE
 
@@ -305,16 +319,15 @@ void main()
 		new Student("Тетевосян", "Элеонора", 17, "РПО", "P_418", 98, 48),
 		new Graduate("Пензин", "Богдан", 15, "РПО", "P_418", 98, 99, "Мнение и этическая позиция подростков на развитие искуственного интеллекта (AGI - Artificial General Intelligence)")
 	};
+	Print(group, sizeof(group)/sizeof(group[0]));
 
-	// __vfptr (Virtual Functions Pointers) - Таблица указателей на виртуальные функции.
-	//Specialization - уточнение
-	//Downcast - приведение базового типа к дочернему.
-	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	std::ofstream fout("group.txt");
+	for (int i = 0; i < sizeof(group) / sizeof(group[i]); i++)
 	{
-		//group[i]->info();
-		//cout << delimiter << endl;
-		cout << *group[i] << endl;
+		fout << *group[i] << endl;
 	}
+	fout.close();
+	system("notepad group.txt");
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
 		delete group[i];
