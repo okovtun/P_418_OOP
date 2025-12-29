@@ -80,6 +80,11 @@ public:
 		ofs << last_name << " " << first_name << " " << age;
 		return ofs;
 	}
+	virtual std::ifstream& read(std::ifstream& ifs)
+	{
+		ifs >> last_name >> first_name >> age;
+		return ifs;
+	}
 };
 int Human::count = 0;
 
@@ -95,6 +100,11 @@ std::ostream& operator<<(std::ostream& os, const Human& obj)
 //	obj.write(ofs);
 //	return ofs;
 //}
+std::ifstream& operator>>(std::ifstream& ifs, Human& obj)
+{
+	obj.read(ifs);
+	return ifs;
+}
 
 class AcademyMember :public Human
 {
@@ -140,6 +150,19 @@ public:
 		Human::write(ofs);
 		ofs << " " << speciality;
 		return ofs;
+	}
+	std::ifstream& read(std::ifstream& ifs)override
+	{
+		Human::read(ifs);
+		char buffer[SPECIALITY_WIDTH + 1] = {};
+		//https://legacy.cplusplus.com/reference/istream/istream/read/
+		ifs.read(buffer, SPECIALITY_WIDTH);
+		//cout << buffer << endl;
+		for (int i = SPECIALITY_WIDTH - 1; buffer[i] == ' '; i--)buffer[i] = 0;
+		while (buffer[0] == ' ')
+			for (int i = 0; buffer[i]; i++)buffer[i] = buffer[i + 1];
+		this->speciality = buffer;
+		return ifs;
 	}
 };
 
@@ -219,6 +242,12 @@ public:
 		ofs << " " << group << " " << rating << " " << attendance;
 		return ofs;
 	}
+	std::ifstream& read(std::ifstream& ifs)override
+	{
+		AcademyMember::read(ifs);
+		ifs >> group >> rating >> attendance;
+		return ifs;
+	}
 };
 
 class Teacher :public AcademyMember
@@ -262,6 +291,12 @@ public:
 		ofs << " " << experience;
 		return ofs;
 	}
+	std::ifstream& read(std::ifstream& ifs)override
+	{
+		AcademyMember::read(ifs);
+		ifs >> experience;
+		return ifs;
+	}
 };
 class Graduate :public Student
 {
@@ -302,6 +337,12 @@ public:
 		Student::write(ofs);
 		ofs << " " << subject;
 		return ofs;
+	}
+	std::ifstream& read(std::ifstream& ifs)
+	{
+		Student::read(ifs);
+		std::getline(ifs, subject);
+		return ifs;
 	}
 };
 
@@ -348,7 +389,7 @@ Human** Load(const std::string& filename, int& n)
 		//1) Вычисляем количество объектов в файле:
 		n = 0;	//Обнуляем размер массива
 		std::string buffer;
-		while(!fin.eof())
+		while (!fin.eof())
 		{
 			std::getline(fin, buffer);
 			if (buffer.size() == 0)continue;
@@ -370,6 +411,8 @@ Human** Load(const std::string& filename, int& n)
 			std::getline(fin, buffer, ':');
 			if (buffer.size() == 0)continue;
 			group[i] = Factory(buffer.c_str());
+			if (group[i])fin >> *group[i];
+			else i--;
 		}
 	}
 	else

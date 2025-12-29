@@ -22,4 +22,7 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="P_418.txt" />
+  </ItemGroup>
 </Project>
