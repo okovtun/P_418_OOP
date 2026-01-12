@@ -1,4 +1,5 @@
-﻿#include<iostream>
+﻿#include<Windows.h>
+#include<iostream>
 using namespace std;
 
 //Enumeration - enum
@@ -64,14 +65,33 @@ public:
 	}
 	void draw() const override
 	{
-		for (int i = 0; i < side; i++)
+		/*for (int i = 0; i < side; i++)
 		{
 			for (int i = 0; i < side; i++)
 			{
 				cout << "* ";
 			}
 			cout << endl;
-		}
+		}*/
+
+		HWND hwnd = GetConsoleWindow();	//1) Получаем окно консоли, чтобы к нему можно было обращаться
+		HDC  hdc = GetDC(hwnd);	//2) Получаем контекст окна консоли. Конетекст - это то, на чем мы будем рисовать.
+
+		//3) Создаем чем мы будем рисовать:
+		HPEN hPen = CreatePen(PS_SOLID, 5, Color::Red);	//Карандаш - рисует контур фигуры
+		HBRUSH hBrush = CreateSolidBrush(Color::Red);	//Кисть рисует заливку фигуры
+
+		//4) Вышесозданные инструменты нужно выбрать (взять в руки):
+		SelectObject(hdc, hPen);
+		SelectObject(hdc, hBrush);
+
+		//5) Рисуем фигуру:
+		Rectangle(hdc, 300, 300, 500, 500);
+
+		//6) Удаляем инструменты, для того чтобы освободить ресурсы, занимаемые этими инструментами:
+		DeleteObject(hBrush);
+		DeleteObject(hPen);
+		ReleaseDC(hwnd, hdc);
 	}
 	void info()const override
 	{
