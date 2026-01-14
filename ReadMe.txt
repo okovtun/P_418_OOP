@@ -4,10 +4,18 @@ https://www.youtube.com/playlist?list=PLeqyOOqxeiINv7LnwWzt8C-7a8kMKYRp9
 Венгерская нотация:
 https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%BE%D1%82%D0%B0%D1%86%D0%B8%D1%8F
 
+WindowsGDI:
+https://learn.microsoft.com/en-us/windows/win32/gdi/windows-gdi
+
 TODO:
+1. Сделать COMMIT и PUSH;
+2. В set-методах, вместо if()-ов применить Тернарный оператор;
+3. Реализовать класс 'Circle', который описывает круг;
+
+DONE:
 1. Метод draw() должен отображать реальный размер квадрата в пикселах;
 2. Реализовать класс 'Rectangle', описывающий прямоугольник;
-3. Почитать про библиотеку GDI;
+3. Почитать про библиотеку GDI:https://learn.microsoft.com/en-us/windows/win32/gdi/windows-gdi;
 
 DONE:
 1. Добить тринспортные средства. Добавить класс 'Bike', а так же добавить 
