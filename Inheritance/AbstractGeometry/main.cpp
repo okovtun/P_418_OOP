@@ -282,6 +282,58 @@ namespace Geometry
 			ReleaseDC(hwnd, hdc);
 		}
 	};
+	class Triangle :public Shape
+	{
+	public:
+		Triangle(SHAPE_TAKE_PARAMETERS) :Shape(SHAPE_GIVE_PARAMETERS) {}
+		~Triangle() {}
+		virtual double get_height()const = 0;
+	};
+	class EquilateralTriangle :public Triangle
+	{
+		double side;
+	public:
+		double get_side()const
+		{
+			return side;
+		}
+		void set_side(double side)
+		{
+			this->side = filter_size(side);
+		}
+		EquilateralTriangle(double side, SHAPE_TAKE_PARAMETERS) :Triangle(SHAPE_GIVE_PARAMETERS)
+		{
+			set_side(side);
+		}
+		~EquilateralTriangle() {}
+		double get_height()const override
+		{
+			return sqrt(pow(side, 2) - pow(side / 2, 2));
+		}
+		double get_area()const override
+		{
+			return side / 2 * get_height();
+		}
+		double get_perimeter()const override
+		{
+			return 3 * side;
+		}
+		void draw()const override
+		{
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
+			SelectObject(hdc, hPen);
+			SelectObject(hdc, hBrush);
+
+			//https://learn.microsoft.com/en-us/windows/win32/gdi/about-polygons
+
+			DeleteObject(hBrush);
+			DeleteObject(hPen);
+			ReleaseDC(hwnd, hdc);
+		}
+	};
 }
 
 void main()
@@ -304,4 +356,7 @@ void main()
 
 	Geometry::Circle circle(150, 700, 300, 5, Geometry::Color::Yellow);
 	circle.info();
+
+	Geometry::EquilateralTriangle e_triangle(80, 500, 500, 32, Geometry::Color::Green);
+	e_triangle.info();
 }

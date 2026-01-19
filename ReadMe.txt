@@ -8,6 +8,10 @@ WindowsGDI:
 https://learn.microsoft.com/en-us/windows/win32/gdi/windows-gdi
 
 TODO:
+1. Нарисовать равносторонний треугольник: https://learn.microsoft.com/en-us/windows/win32/gdi/about-polygons
+2. Добить иерархию реугольников равнобедренным и прямоугольным треуголниками;
+
+DONE:
 1. Сделать COMMIT и PUSH;
 2. В set-методах, вместо if()-ов применить Тернарный оператор;	DONE
 3. Реализовать класс 'Circle', который описывает круг;
