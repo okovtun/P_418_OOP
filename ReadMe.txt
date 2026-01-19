@@ -9,7 +9,7 @@ https://learn.microsoft.com/en-us/windows/win32/gdi/windows-gdi
 
 TODO:
 1. Сделать COMMIT и PUSH;
-2. В set-методах, вместо if()-ов применить Тернарный оператор;
+2. В set-методах, вместо if()-ов применить Тернарный оператор;	DONE
 3. Реализовать класс 'Circle', который описывает круг;
 
 DONE:
