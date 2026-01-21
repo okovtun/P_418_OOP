@@ -6,8 +6,17 @@ https://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BD%D0%B3%D0%B5%D1%80%D1%81%D0%BA%D
 
 WindowsGDI:
 https://learn.microsoft.com/en-us/windows/win32/gdi/windows-gdi
+https://learn.microsoft.com/en-us/windows/win32/gdi/lines-and-curves
+
+DirectX:
+https://learn.microsoft.com/en-us/windows/win32/directx
 
 TODO:
+1. Для квадрата и прямоугольника нарисовать диагональ комлементарным цветом;
+2. Для круга нарисовать радиус комлементарным цветом;
+3. Для треугольников нарисовать высоту комплементарным цветом;
+
+DONE:
 1. Нарисовать равносторонний треугольник: https://learn.microsoft.com/en-us/windows/win32/gdi/about-polygons
 2. Добить иерархию реугольников равнобедренным и прямоугольным треуголниками;
 
