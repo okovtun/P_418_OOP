@@ -1,33 +1,30 @@
-﻿#define _USE_MATH_DEFINES
+#pragma warning (disable:4326)
+#define _USE_MATH_DEFINES
 #include<Windows.h>
 #include<iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
 
-namespace Geometry
+namespace  Geometry
 {
-	//Enumeration - enum
 	enum Color
 	{
-		Black = 0x00000000,
-		Red = 0x000000FF,	//0x - Hexadecimal
-		//bRed= 0000 0000   0000 0000   0000 0000   1111 1111
+		Red = 0x000000FF,
 		Green = 0x0000FF00,
 		Blue = 0x00FF0000,
 		Yellow = 0x0000FFFF,
 		Purple = 0x00800080,
-		White = 0x00FFFFFF
-	};
-	enum Enum
-	{
-		Sunday,
-		Monday,
-		Tuesday = 12,
-		Wednesday,
-		Thursday
+		White = 0x00FFFFFF,
+		Black = 0x00000000
 	};
 
-#define SHAPE_TAKE_PARAMETERS	int start_x, int start_y, int line_width, Color color
-#define SHAPE_GIVE_PARAMETERS	start_x, start_y, line_width, color
+#define tab "\t"
+#define delimiter "\n----------------------------------------------------------------------\n"
+#define SHAPE_TAKE_PARAMETERS int start_x, int start_y, int line_width, Color color
+#define SHAPE_GIVE_PARAMETERS start_x, start_y, line_width, color
+
 	class Shape
 	{
 		static const int MIN_START_X = 100;
@@ -38,8 +35,9 @@ namespace Geometry
 		static const int MAX_LINE_WIDTH = 32;
 		static const int MIN_SIZE = 20;
 		static const int MAX_SIZE = 500;
+
 	protected:
-		Color color;	//Цвет фигуры
+		Color color;
 		int start_x;
 		int start_y;
 		int line_width;
@@ -58,9 +56,10 @@ namespace Geometry
 		}
 		void set_start_x(int start_x)
 		{
-			//if (start_x < MIN_START_X)start_x = MIN_START_X;
-			//if (start_x > MAX_START_X)start_x = MAX_START_X;
-			//this->start_x = start_x;
+			//start_x < MIN_START_X ? start_x = MIN_START_X : start_x;
+			//start_x > MAX_START_X ? start_x = MAX_START_X : start_x;
+			//if (start_x < MIN_START_X) start_x = MIN_START_X;
+			//if (start_x > MAX_START_X) start_x = MAX_START_X;
 			this->start_x =
 				start_x < MIN_START_X ? MIN_START_X :
 				start_x > MAX_START_X ? MAX_START_X :
@@ -68,9 +67,10 @@ namespace Geometry
 		}
 		void set_start_y(int start_y)
 		{
-			//if (start_y < MIN_START_Y)start_y = MIN_START_Y;
-			//if (start_y > MAX_START_Y)start_y = MAX_START_Y;
-			//this->start_y = start_y;
+			//start_y < MIN_START_Y ? start_y = MIN_START_Y : start_y;
+			//start_y > MAX_START_Y ? start_y = MAX_START_Y : start_y;
+			//if (start_y < MIN_START_Y) start_y = MIN_START_Y;
+			//if (start_y > MAX_START_Y) start_y = MAX_START_Y;
 			this->start_y =
 				start_y < MIN_START_Y ? MIN_START_Y :
 				start_y > MAX_START_Y ? MAX_START_Y :
@@ -78,9 +78,10 @@ namespace Geometry
 		}
 		void set_line_width(int line_width)
 		{
+			//line_width < MIN_LINE_WIDTH ? line_width = MIN_LINE_WIDTH : line_width;
+			//line_width > MAX_LINE_WIDTH ? line_width = MAX_LINE_WIDTH : line_width;
 			//if (line_width < MIN_LINE_WIDTH)line_width = MIN_LINE_WIDTH;
 			//if (line_width > MAX_LINE_WIDTH)line_width = MAX_LINE_WIDTH;
-			//this->line_width = line_width;
 			this->line_width =
 				line_width < MIN_LINE_WIDTH ? MIN_LINE_WIDTH :
 				line_width > MAX_LINE_WIDTH ? MAX_LINE_WIDTH :
@@ -88,8 +89,10 @@ namespace Geometry
 		}
 		double filter_size(double size)
 		{
+			//size < 20 ? size = 20 : size;
+			//size > 500 ? size = 500 : size;
 			//if (size < 20)size = 20;
-			//if (size > 800)size = 500;
+			//if (size > 500)size = 500;
 			//return size;
 			return
 				size < MIN_SIZE ? MIN_SIZE :
@@ -103,16 +106,15 @@ namespace Geometry
 			set_line_width(line_width);
 		}
 		virtual ~Shape() {}
-		virtual double get_area() const = 0;	//Pure virtual function
+		virtual double get_area() const = 0;
 		virtual double get_perimeter() const = 0;
 		virtual void draw() const = 0;
-		virtual void info() const
+		virtual void info()const
 		{
-			cout << "Площадь фигуры: " << get_area() << endl;
-			cout << "Периметр фигуры: " << get_perimeter() << endl;
 			draw();
+			cout << "������� ������: " << get_area() << endl;
+			cout << "�������� ������: " << get_perimeter() << endl;
 		}
-
 	};
 
 	class Square :public Shape
@@ -151,39 +153,25 @@ namespace Geometry
 				cout << endl;
 			}*/
 
-			HWND hwnd = GetConsoleWindow();	//1) Получаем окно консоли, чтобы к нему можно было обращаться
-			HDC  hdc = GetDC(hwnd);	//2) Получаем контекст окна консоли. Конетекст - это то, на чем мы будем рисовать.
+			HWND hwnd = GetConsoleWindow();
+			HDC hdc = GetDC(hwnd);
 
-			//3) Создаем чем мы будем рисовать:
-			HPEN hPen = CreatePen(PS_SOLID, line_width, color);	//Карандаш - рисует контур фигуры
-			HBRUSH hBrush = CreateSolidBrush(color);	//Кисть рисует заливку фигуры
+			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
+			HBRUSH hBrush = CreateSolidBrush(color);
 
-			//4) Вышесозданные инструменты нужно выбрать (взять в руки):
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
-			//5) Рисуем фигуру:
 			::Rectangle(hdc, start_x, start_y, start_x + side, start_y + side);
-			/*
-			Функция Rectangle() рисует прямоугольник.
-			hdc - это контекст устройства, на котором нужно нарисовать прямоуголник;
-			300,300 - координаты вернего-левого угла;
-			500,500 - координаты правого-нижнего угла;
-			Все координаты всегда задаются в пикселах!!!
-			Начало координат всегда находится в левом-верхнем углу экрана;
-			Rectangle() является частью библиотеки WinGDI - Windows Graphics Device Interface
-			https://learn.microsoft.com/en-us/windows/win32/gdi/windows-gdi
-			*/
 
-			//6) Удаляем инструменты, для того чтобы освободить ресурсы, занимаемые этими инструментами:
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
 			ReleaseDC(hwnd, hdc);
 		}
-		void info()const override
+		void info() const override
 		{
-			cout << typeid(*this).name() + 6 << endl;
-			cout << "Длина стороны: " << get_side() << endl;
+			cout << typeid(*this).name() << endl;
+			cout << "����� �������: " << get_side() << endl;
 			Shape::info();
 		}
 	};
@@ -232,7 +220,7 @@ namespace Geometry
 			HBRUSH hBrush = CreateSolidBrush(color);
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
-			//	:: - Global Scope;
+
 			::Rectangle(hdc, start_x, start_y, start_x + width, start_y + height);
 
 			DeleteObject(hBrush);
@@ -260,11 +248,11 @@ namespace Geometry
 		~Circle() {}
 		double get_area()const override
 		{
-			return M_PI * radius*radius;
+			return M_PI * radius * radius;
 		}
 		double get_perimeter()const override
 		{
-			return 2 * M_PI*radius;
+			return 2 * M_PI * radius;
 		}
 		void draw()const override
 		{
@@ -286,10 +274,10 @@ namespace Geometry
 	{
 	public:
 		Triangle(SHAPE_TAKE_PARAMETERS) :Shape(SHAPE_GIVE_PARAMETERS) {}
-		~Triangle() {}
+		~Triangle() {};
 		virtual double get_height()const = 0;
 	};
-	class EquilateralTriangle :public Triangle
+	class EguilateralTriangle : public Triangle
 	{
 		double side;
 	public:
@@ -301,11 +289,11 @@ namespace Geometry
 		{
 			this->side = filter_size(side);
 		}
-		EquilateralTriangle(double side, SHAPE_TAKE_PARAMETERS) :Triangle(SHAPE_GIVE_PARAMETERS)
+		EguilateralTriangle(double side, SHAPE_TAKE_PARAMETERS) :Triangle(SHAPE_GIVE_PARAMETERS)
 		{
 			set_side(side);
 		}
-		~EquilateralTriangle() {}
+		~EguilateralTriangle() {}
 		double get_height()const override
 		{
 			return sqrt(pow(side, 2) - pow(side / 2, 2));
@@ -327,7 +315,6 @@ namespace Geometry
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
-			//https://learn.microsoft.com/en-us/windows/win32/gdi/about-polygons
 			POINT vertices[] =
 			{
 				{start_x + side / 2,start_y},
@@ -389,14 +376,7 @@ namespace Geometry
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
-			//https://learn.microsoft.com/en-us/windows/win32/gdi/about-polygons
-			POINT vertices[] =
-			{
-				{start_x + base / 2, start_y},
-				{start_x + base, start_y + get_height()},
-				{start_x, start_y + get_height()},
-			};
-			Polygon(hdc, vertices, 3);
+
 
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
@@ -408,15 +388,12 @@ namespace Geometry
 void main()
 {
 	setlocale(LC_ALL, "");
-	/*cout << Enum::Monday << endl;
-	cout << Enum::Tuesday << endl;
-	cout << Enum::Wednesday << endl;
-	cout << Enum::Thursday << endl;*/
+
 	//Shape shape = Color::Red;
-	Geometry::Square square(50000, -300, -300, 1, Geometry::Color::Black);
-	/*cout << "Сторона квадрата: " << square.get_side() << endl;
-	cout << "Площадь фигуры: " << square.get_area() << endl;
-	cout << "Периметр фигуры: " << square.get_perimeter() << endl;
+	Geometry::Square square(5000, -300, -300, 1, Geometry::Color::White);
+	/*cout << "������� ��������: " << square.get_side() << endl;
+	cout << "������� ������: " << square.get_area() << endl;
+	cout << "�������� ������: " << square.get_perimeter() << endl;
 	square.draw();*/
 	square.info();
 
@@ -426,9 +403,8 @@ void main()
 	Geometry::Circle circle(150, 700, 300, 5, Geometry::Color::Yellow);
 	circle.info();
 
-	Geometry::EquilateralTriangle e_triangle(80, 500, 500, 32, Geometry::Color::Green);
+	Geometry::EguilateralTriangle e_triangle(80, 500, 500, 32, Geometry::Color::Green);
 	e_triangle.info();
 
-	Geometry::IsoscelesTriangle iso_triangle(100, 180, 700, 400, 32, Geometry::Color::Purple);
-	iso_triangle.draw();
+	Geometry::IsoscelesTriangle iso_triangle(100, 80, 700, 300, 32, Geometry::Color::Purple);
 }
