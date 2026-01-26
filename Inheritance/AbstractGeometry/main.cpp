@@ -3,6 +3,9 @@
 #include<iostream>
 using namespace std;
 
+//#define SQUARE_FULL
+//#define EQUILATERAL_FULL
+
 namespace Geometry
 {
 	//Enumeration - enum
@@ -116,6 +119,7 @@ namespace Geometry
 
 	};
 
+#ifdef SQUARE_FULL
 	class Square :public Shape
 	{
 		double side;
@@ -189,7 +193,9 @@ namespace Geometry
 			cout << "Длина стороны: " << get_side() << endl;
 			Shape::info();
 		}
-	};*/
+	};
+#endif // SQUARE_FULL
+
 
 	class Rectangle :public Shape
 	{
@@ -245,6 +251,13 @@ namespace Geometry
 			ReleaseDC(hwnd, hdc);
 		}
 	};
+	class Square :public Rectangle
+	{
+	public:
+		Square(double side, SHAPE_TAKE_PARAMETERS) :Rectangle(side, side, SHAPE_GIVE_PARAMETERS) {}
+		~Square() {}
+	};
+
 	class Circle :public Shape
 	{
 		double radius;
@@ -301,6 +314,7 @@ namespace Geometry
 			Shape::info();
 		}
 	};
+#ifdef EQUILATERAL_FULL
 	class EquilateralTriangle :public Triangle
 	{
 		double side;
@@ -356,6 +370,8 @@ namespace Geometry
 			ReleaseDC(hwnd, hdc);
 		}
 	};
+#endif // EQUILATERAL_FULL
+
 	class IsoscelesTriangle :public Triangle
 	{
 		double base;
@@ -421,6 +437,13 @@ namespace Geometry
 			ReleaseDC(hwnd, hdc);
 		}
 	};
+	class EquilateralTriangle :public IsoscelesTriangle
+	{
+	public:
+		EquilateralTriangle(double side, SHAPE_TAKE_PARAMETERS) :IsoscelesTriangle(side, side, SHAPE_GIVE_PARAMETERS) {}
+		~EquilateralTriangle() {}
+	};
+
 	class RightTriangle :public Triangle
 	{
 		double cathet_1;
@@ -509,7 +532,7 @@ void main()
 	Geometry::Circle circle(150, 700, 100, 5, Geometry::Color::Yellow);
 	circle.info();
 
-	Geometry::EquilateralTriangle e_triangle(180, 450, 250, 8, Geometry::Color::Green);
+	Geometry::EquilateralTriangle e_triangle(180, 450, 250, 8, Geometry::Color::Green, Geometry::Color::Green);
 	e_triangle.info();
 
 	Geometry::IsoscelesTriangle iso_triangle(100, 180, 700, 400, 8, Geometry::Color::Purple);
