@@ -26,8 +26,8 @@ namespace Geometry
 		Thursday
 	};
 
-#define SHAPE_TAKE_PARAMETERS	int start_x, int start_y, int line_width, Color color
-#define SHAPE_GIVE_PARAMETERS	start_x, start_y, line_width, color
+#define SHAPE_TAKE_PARAMETERS	int start_x, int start_y, int line_width, Color color, Color fill_color = Color::Black
+#define SHAPE_GIVE_PARAMETERS	start_x, start_y, line_width, color, fill_color
 	class Shape
 	{
 		static const int MIN_START_X = 100;
@@ -39,7 +39,8 @@ namespace Geometry
 		static const int MIN_SIZE = 20;
 		static const int MAX_SIZE = 500;
 	protected:
-		Color color;	//Цвет фигуры
+		Color color;		//Цвет фигуры
+		Color fill_color;	//Цвет заливки
 		int start_x;
 		int start_y;
 		int line_width;
@@ -96,7 +97,7 @@ namespace Geometry
 				size > MAX_SIZE ? MAX_SIZE :
 				size;
 		}
-		Shape(SHAPE_TAKE_PARAMETERS) :color(color)
+		Shape(SHAPE_TAKE_PARAMETERS) :color(color), fill_color(fill_color)
 		{
 			set_start_x(start_x);
 			set_start_y(start_y);
@@ -156,7 +157,7 @@ namespace Geometry
 
 			//3) Создаем чем мы будем рисовать:
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);	//Карандаш - рисует контур фигуры
-			HBRUSH hBrush = CreateSolidBrush(color);	//Кисть рисует заливку фигуры
+			HBRUSH hBrush = CreateSolidBrush(fill_color);	//Кисть рисует заливку фигуры
 
 			//4) Вышесозданные инструменты нужно выбрать (взять в руки):
 			SelectObject(hdc, hPen);
@@ -164,6 +165,8 @@ namespace Geometry
 
 			//5) Рисуем фигуру:
 			::Rectangle(hdc, start_x, start_y, start_x + side, start_y + side);
+			::MoveToEx(hdc, start_x, start_y, NULL);
+			::LineTo(hdc, start_x + side, start_y + side);
 			/*
 			Функция Rectangle() рисует прямоугольник.
 			hdc - это контекст устройства, на котором нужно нарисовать прямоуголник;
@@ -186,7 +189,7 @@ namespace Geometry
 			cout << "Длина стороны: " << get_side() << endl;
 			Shape::info();
 		}
-	};
+	};*/
 
 	class Rectangle :public Shape
 	{
@@ -229,11 +232,13 @@ namespace Geometry
 			HWND hwnd = GetConsoleWindow();
 			HDC hdc = GetDC(hwnd);
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
-			HBRUSH hBrush = CreateSolidBrush(color);
+			HBRUSH hBrush = CreateSolidBrush(fill_color);
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 			//	:: - Global Scope;
 			::Rectangle(hdc, start_x, start_y, start_x + width, start_y + height);
+			::MoveToEx(hdc, start_x, start_y, NULL);
+			::LineTo(hdc, start_x + width, start_y + height);
 
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
@@ -271,11 +276,13 @@ namespace Geometry
 			HWND hwnd = GetConsoleWindow();
 			HDC hdc = GetDC(hwnd);
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
-			HBRUSH hBrush = CreateSolidBrush(color);
+			HBRUSH hBrush = CreateSolidBrush(fill_color);
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
 			Ellipse(hdc, start_x, start_y, start_x + 2 * radius, start_y + 2 * radius);
+			MoveToEx(hdc, start_x + radius, start_y + radius, NULL);
+			LineTo(hdc, start_x + radius * 2, start_y + radius);
 
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
@@ -328,7 +335,7 @@ namespace Geometry
 			HWND hwnd = GetConsoleWindow();
 			HDC hdc = GetDC(hwnd);
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
-			HBRUSH hBrush = CreateSolidBrush(color);
+			HBRUSH hBrush = CreateSolidBrush(fill_color);
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
@@ -340,6 +347,9 @@ namespace Geometry
 				{start_x,start_y + get_height()},
 			};
 			Polygon(hdc, vertices, 3);
+
+			MoveToEx(hdc, start_x + side / 2, start_y, NULL);
+			LineTo(hdc, start_x + side / 2, start_y + get_height());
 
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
@@ -390,7 +400,7 @@ namespace Geometry
 			HWND hwnd = GetConsoleWindow();
 			HDC hdc = GetDC(hwnd);
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
-			HBRUSH hBrush = CreateSolidBrush(color);
+			HBRUSH hBrush = CreateSolidBrush(fill_color);
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
@@ -402,6 +412,9 @@ namespace Geometry
 				{start_x, start_y + get_height()},
 			};
 			Polygon(hdc, vertices, 3);
+
+			MoveToEx(hdc, start_x + base / 2, start_y, NULL);
+			LineTo(hdc, start_x + base / 2, start_y + get_height());
 
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
@@ -483,27 +496,35 @@ void main()
 	cout << Enum::Wednesday << endl;
 	cout << Enum::Thursday << endl;*/
 	//Shape shape = Color::Red;
-	Geometry::Square square(50000, -300, -300, 1, Geometry::Color::Black);
+	Geometry::Square square(250, -300, -300, 1, Geometry::Color::White);
 	/*cout << "Сторона квадрата: " << square.get_side() << endl;
 	cout << "Площадь фигуры: " << square.get_area() << endl;
 	cout << "Периметр фигуры: " << square.get_perimeter() << endl;
 	square.draw();*/
 	square.info();
 
-	Geometry::Rectangle rect(200, 100, 500, 300, 5, Geometry::Color::Red);
+	Geometry::Rectangle rect(200, 100, 400, 100, 5, Geometry::Color::Red);
 	rect.info();
 
-	Geometry::Circle circle(150, 700, 300, 5, Geometry::Color::Yellow);
+	Geometry::Circle circle(150, 700, 100, 5, Geometry::Color::Yellow);
 	circle.info();
 
-	Geometry::EquilateralTriangle e_triangle(80, 500, 500, 32, Geometry::Color::Green);
+	Geometry::EquilateralTriangle e_triangle(180, 450, 250, 8, Geometry::Color::Green);
 	e_triangle.info();
 
-	Geometry::IsoscelesTriangle iso_triangle(100, 180, 700, 400, 32, Geometry::Color::Purple);
+	Geometry::IsoscelesTriangle iso_triangle(100, 180, 700, 400, 8, Geometry::Color::Purple);
 	iso_triangle.draw();
 
 	Geometry::RightTriangle r_triangle(100, 50, 850, 500, 5, Geometry::Color::Black);
 	r_triangle.info();
 	//instance - экземпляр;
 	//instantiate - создать экземпляр;
+	while (true)
+	{
+		square.draw();
+		rect.draw();
+		circle.draw();
+		iso_triangle.draw();
+		r_triangle.draw();
+	}
 }
