@@ -298,7 +298,7 @@ namespace Geometry
 			int degree = -30;
 			double angle = degree * M_PI / 180;
 			LineTo(hdc, (start_x + radius/* * 2*/ + radius * cos(angle)), start_y + radius + radius * sin(-angle));
-			cout << degree << "\t" << sin(-angle) << "\t" << cos(angle) << endl;
+			//cout << degree << "\t" << sin(-angle) << "\t" << cos(angle) << endl;
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
 			ReleaseDC(hwnd, hdc);
@@ -494,7 +494,7 @@ namespace Geometry
 			HWND hwnd = GetConsoleWindow();
 			HDC hdc = GetDC(hwnd);
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
-			HBRUSH hBrush = CreateSolidBrush(color);
+			HBRUSH hBrush = CreateSolidBrush(fill_color);
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
@@ -505,6 +505,13 @@ namespace Geometry
 				{start_x + cathet_1, start_y + cathet_2},
 			};
 			Polygon(hdc, vertices, 3);
+
+			RightTriangle tri_1(get_height(), cathet_2*cathet_2 / get_hypotenuse(), start_x, start_y, 1, color);
+			RightTriangle tri_2(get_height(), cathet_1*cathet_1 / get_hypotenuse(), start_x, start_y, 1, color);
+			RightTriangle tri_11(tri_1.get_height(), tri_1.cathet_2*tri_1.cathet_2 / tri_1.get_hypotenuse(), 0, 0, 0, color);
+			RightTriangle tri_22(tri_2.get_height(), tri_2.cathet_1*tri_2.cathet_1 / tri_2.get_hypotenuse(), 0, 0, 0, color);
+			MoveToEx(hdc, start_x, start_y + cathet_2, NULL);
+			LineTo(hdc, start_x + tri_22.cathet_2, start_y + tri_11.cathet_2);
 
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
@@ -540,7 +547,7 @@ void main()
 	Geometry::IsoscelesTriangle iso_triangle(100, 180, 700, 400, 8, Geometry::Color::Purple);
 	iso_triangle.draw();
 
-	Geometry::RightTriangle r_triangle(100, 50, 850, 500, 5, Geometry::Color::Black);
+	Geometry::RightTriangle r_triangle(200, 100, 850, 450, 3, Geometry::Color::White, Geometry::Color::Black);
 	r_triangle.info();
 	//instance - экземпляр;
 	//instantiate - создать экземпляр;
