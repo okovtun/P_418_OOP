@@ -12,6 +12,9 @@ DirectX:
 https://learn.microsoft.com/en-us/windows/win32/directx
 
 TODO:
+Нарисовать фигуры при помощи DirectX;
+
+DONE:
 1. Радиус круга должен быть под углом 30 градусов;
 2. Нарисовать высоту прямоугольного треугольника;
 

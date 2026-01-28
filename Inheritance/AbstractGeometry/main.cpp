@@ -294,8 +294,12 @@ namespace Geometry
 			SelectObject(hdc, hBrush);
 
 			Ellipse(hdc, start_x, start_y, start_x + 2 * radius, start_y + 2 * radius);
+
 			MoveToEx(hdc, start_x + radius, start_y + radius, NULL);
-			int degree = 100;
+			LineTo(hdc, (start_x + radius * 2), (start_y + radius));
+
+			MoveToEx(hdc, start_x + radius, start_y + radius, NULL);
+			int degree = 30;
 			double angle = -degree * M_PI / 180;
 			LineTo(hdc, (start_x + radius) + radius * cos(angle), (start_y + radius) + radius * sin(angle));
 
@@ -494,7 +498,7 @@ namespace Geometry
 			HWND hwnd = GetConsoleWindow();
 			HDC hdc = GetDC(hwnd);
 			HPEN hPen = CreatePen(PS_SOLID, line_width, color);
-			HBRUSH hBrush = CreateSolidBrush(color);
+			HBRUSH hBrush = CreateSolidBrush(fill_color);
 			SelectObject(hdc, hPen);
 			SelectObject(hdc, hBrush);
 
@@ -505,6 +509,20 @@ namespace Geometry
 				{start_x + cathet_1, start_y + cathet_2},
 			};
 			Polygon(hdc, vertices, 3);
+
+			MoveToEx(hdc, start_x, start_y + cathet_2, NULL);
+			/*double cat2_oposite_angle = asin(cathet_2 / get_hypotenuse())/M_PI* 180 ;
+			double height_right_angle = 180 - 90 - cat2_oposite_angle;
+			double height = get_height();
+			double target_x = get_height()*sin(90-height_right_angle*M_PI / 180);
+			double target_y = get_height()*cos(90-height_right_angle*M_PI / 180);
+			LineTo(hdc, start_x+target_x, start_y+target_y);*/
+
+			RightTriangle tri_1(cathet_1*cathet_1 / get_hypotenuse(), get_height(), 0, 0, 0, Color::Black);
+			RightTriangle tri_2(get_height(), cathet_2*cathet_2 / get_hypotenuse(), 0, 0, 0, Color::Black);
+			//RightTriangle tri_22(tri_2.get_height(), tri_2.cathet_2*tri_2.cathet_2 / tri_2.get_hypotenuse(), 0, 0, 0, Color::Black);
+			//LineTo(hdc, start_x + tri_2.get_height(), start_y + tri_22.cathet_2);
+			LineTo(hdc, start_x + tri_2.get_height(), start_y + cathet_2 - tri_1.get_height());
 
 			DeleteObject(hBrush);
 			DeleteObject(hPen);
@@ -534,13 +552,13 @@ void main()
 	Geometry::Circle circle(150, 700, 100, 5, Geometry::Color::Yellow);
 	circle.info();
 
-	Geometry::EquilateralTriangle e_triangle(180, 450, 250, 8, Geometry::Color::Green, Geometry::Color::Green);
+	Geometry::EquilateralTriangle e_triangle(180, 450, 250, 18, Geometry::Color::Green, Geometry::Color::Green);
 	e_triangle.info();
 
 	Geometry::IsoscelesTriangle iso_triangle(100, 180, 700, 400, 8, Geometry::Color::Purple);
 	iso_triangle.draw();
 
-	Geometry::RightTriangle r_triangle(100, 50, 850, 500, 5, Geometry::Color::Black);
+	Geometry::RightTriangle r_triangle(80, 150, 850, 420, 5, Geometry::Color::White);
 	r_triangle.info();
 	//instance - экземпляр;
 	//instantiate - создать экземпляр;
