@@ -558,7 +558,7 @@ void main()
 	Geometry::IsoscelesTriangle iso_triangle(100, 180, 700, 400, 8, Geometry::Color::Purple);
 	iso_triangle.draw();
 
-	Geometry::RightTriangle r_triangle(80, 150, 850, 420, 5, Geometry::Color::White);
+	Geometry::RightTriangle r_triangle(300, 150, 850, 420, 5, Geometry::Color::White);
 	r_triangle.info();
 	//instance - экземпляр;
 	//instantiate - создать экземпляр;
