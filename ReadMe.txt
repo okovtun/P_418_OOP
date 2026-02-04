@@ -17,7 +17,8 @@ https://learn.microsoft.com/en-us/windows/win32/directx
 
 TODO:
 1. Написать метод ??? erase(???) который удаляет элемент на заданному индексу;
-2. 
+2. Проверочный код должен заработать:
+	https://github.com/okovtun/P_418_OOP/blob/b8d26a92c6a06842fe7159ca1cd6fa66fc81d57b/DataContainers/ForwardList/main.cpp#L193C1-L204C22
 
 DONE:
 1. Написать и проветрить метод ??? push_back(???), который добавляет элемент в конец списка;
