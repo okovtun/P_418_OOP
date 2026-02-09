@@ -14,5 +14,4 @@ void main()
 		cout << *(arr + i) << tab;
 	}
 	cout << endl;
-	arr = new int[10];
 }
