@@ -31,6 +31,7 @@ public:
 
 	}
 	friend class ForwardList;
+	friend ForwardList operator+(const ForwardList& left, const ForwardList& right);
 };
 int Element::count = 0;
 
@@ -39,6 +40,10 @@ class ForwardList
 	Element* Head;	//Голова списка - является точкой входа в список
 	int size;
 public:
+	Element* get_head()const
+	{
+		return Head;
+	}
 	int get_size()const
 	{
 		return size;
@@ -59,10 +64,21 @@ public:
 	}
 	ForwardList(const ForwardList& other) :ForwardList()
 	{
+		//Deep copy
 		/*for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
 			push_back(Temp->Data);*/
 		*this = other;
 		cout << "LCopyConstructor:\t" << this << endl;
+	}
+	ForwardList(ForwardList&& other):ForwardList()
+	{
+		//Shallow copy:
+		/*this->Head = other.Head;
+		this->size = other.size;
+		other.Head = nullptr;
+		other.size = 0;*/
+		*this = std::move(other);	//Метод 'std::move()' вызывает MoveAssignment.
+		cout << "LMoveConstructor:\t" << this << endl;
 	}
 	~ForwardList()
 	{
@@ -79,6 +95,17 @@ public:
 			push_front(Temp->Data);
 		reverse();
 		cout << "LCopyAssignment:\t" << this << endl;
+		return *this;
+	}
+	ForwardList& operator=(ForwardList&& other)
+	{
+		if (this == &other)return *this;
+		while (Head)pop_front();
+		this->Head = other.Head;
+		this->size = other.size;
+		other.Head = nullptr;
+		other.size = 0;
+		cout << "LMoveAssignment:\t" << this << endl;
 		return *this;
 	}
 	int& operator[](int Index)
@@ -203,11 +230,19 @@ public:
 	}
 };
 
+ForwardList operator+(const ForwardList& left, const ForwardList& right)
+{
+	ForwardList result = left;	//CopyConstructor
+	for (Element* Temp = right.get_head(); Temp; Temp = Temp->pNext)
+		result.push_back(Temp->Data);
+	return result;
+}
+
 //#define BASE_CHECK
 //#define SIZE_CHECK
 //#define HOME_WORK_1
 //#define COPY_SEMANTIC_CHECK
-#define PERFORMANCE_CHECK
+//#define PERFORMANCE_CHECK
 
 void main()
 {
@@ -312,5 +347,21 @@ void main()
 	//list2.print();
 #endif // PERFORMANCE_CHECK
 
+	ForwardList list1;
+	list1.push_back(3);
+	list1.push_back(5);
+	list1.push_back(8);
+	list1.push_back(13);
+	list1.push_back(21);
+
+	ForwardList list2;
+	list2.push_back(34);
+	list2.push_back(55);
+	list2.push_back(89);
+
+	cout << delimiter << endl;
+	ForwardList list3 = list1 + list2;
+	cout << delimiter << endl;
+	list3.print();
 
 }
