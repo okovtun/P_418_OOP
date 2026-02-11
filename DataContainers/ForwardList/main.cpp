@@ -1,5 +1,6 @@
 ﻿//ForwardList - односвязный список
 #include<iostream>
+#include<ctime>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -16,12 +17,18 @@ public:
 	Element(int Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
 	{
 		count++;
+#ifdef DEBUG
 		cout << "EConstructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	~Element()
 	{
 		count--;
+#ifdef DEBUG
 		cout << "EDestructor:\t" << this << endl;
+#endif // DEBUG
+
 	}
 	friend class ForwardList;
 };
@@ -45,15 +52,16 @@ public:
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
-	explicit ForwardList(int size):ForwardList()
+	explicit ForwardList(int size) :ForwardList()
 	{
 		while (size--)push_front(0);
 		cout << "1argLConstructor:\t" << this << endl;
 	}
 	ForwardList(const ForwardList& other) :ForwardList()
 	{
-		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
-			push_back(Temp->Data);
+		/*for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
+			push_back(Temp->Data);*/
+		*this = other;
 		cout << "LCopyConstructor:\t" << this << endl;
 	}
 	~ForwardList()
@@ -68,7 +76,9 @@ public:
 		if (this == &other)return *this;
 		while (Head)pop_front();
 		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
-			push_back(Temp->Data);
+			push_front(Temp->Data);
+		reverse();
+		cout << "LCopyAssignment:\t" << this << endl;
 		return *this;
 	}
 	int& operator[](int Index)
@@ -165,6 +175,17 @@ public:
 	}
 
 	//				Methods:
+	void reverse()
+	{
+		ForwardList reverse;
+		while (Head)
+		{
+			reverse.push_front(Head->Data);
+			pop_front();
+		}
+		this->Head = reverse.Head;
+		reverse.Head = nullptr;
+	}
 	void print()const
 	{
 		/*Element* Temp = Head;	//Temp - это Итератор.
@@ -174,7 +195,7 @@ public:
 			cout << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
 			Temp = Temp->pNext;		//Переход на следующий элемент.
 		}*/
-		for(Element* Temp = Head; Temp; Temp=Temp->pNext)
+		for (Element* Temp = Head; Temp; Temp = Temp->pNext)
 			cout << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
 		cout << "Количество элементов списка:" << size << endl;
 		cout << "Общее количество элементов: " << Element::count << endl;
@@ -185,6 +206,8 @@ public:
 //#define BASE_CHECK
 //#define SIZE_CHECK
 //#define HOME_WORK_1
+//#define COPY_SEMANTIC_CHECK
+#define PERFORMANCE_CHECK
 
 void main()
 {
@@ -244,6 +267,7 @@ void main()
 	cout << endl;
 #endif // HOME_WORK_1
 
+#ifdef COPY_SEMANTIC_CHECK
 	ForwardList list1;
 	list1.push_back(3);
 	list1.push_back(5);
@@ -253,16 +277,40 @@ void main()
 	list1 = list1;
 	list1.print();
 
-	//ForwardList list2 = list1;	//CopyConstructor
-	ForwardList list2;
+	ForwardList list2 = list1;	//CopyConstructor
+	list2.print();
+	//ForwardList list2;
 //l-value = r-value;
 	list2 = list1;		//CopyAssignment
 	list2.print();
-	list2 = list1;		//CopyAssignment
-	list2.print();
-	list2 = list1;		//CopyAssignment
-	list2.print();
-	list2 = list1;		//CopyAssignment
-	list2.print();
+#endif // COPY_SEMANTIC_CHECK
+
+#ifdef PERFORMANCE_CHECK
+	int n;
+	cout << "Введите разамер списка: "; cin >> n;
+	ForwardList list1;
+	clock_t start = clock();	//Функция 'clock()' возвращает количество тактов, и мы сохраняем его в переменную 'start'.
+	for (int i = 0; i < n; i++)
+	{
+		list1.push_front(rand() % 100);
+		//list1.push_back(rand() % 100);
+	}
+	clock_t end = clock();		//Сохраняем количество тактов, потраченных на заполнение списка
+	//Теперь разность замеров 'start' и 'end' (end - start) - это время, потраченное на заполнение списка в тактах.
+	//Для того чтобы определить время в секундах, нужно промежуток времени в тактах разделить на количество тактов зв 1 секунду.
+	//list1.print();
+	cout << delimiter << endl;
+	cout << "list1 заполнен за " << double(end - start) / CLOCKS_PER_SEC << " секунд" << endl;
+	cout << delimiter << endl;
+	system("PAUSE");
+	start = clock();
+	ForwardList list2 = list1;
+	end = clock();
+	cout << delimiter << endl;
+	cout << "list2 скопирован за " << double(end - start) / CLOCKS_PER_SEC << " секунд" << endl;
+	cout << delimiter << endl;
+	//list2.print();
+#endif // PERFORMANCE_CHECK
+
 
 }
