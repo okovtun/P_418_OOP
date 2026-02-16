@@ -18,7 +18,7 @@ https://learn.microsoft.com/en-us/windows/win32/directx
 TODO:
 1. Почитать про Rule of Zero, Rule of three и Rule of five;
 2. Проверочный код должен заработать:
-	ForwardList list = { 3, 5, 8, 13, 21 };
+	ForwardList list = { 3, 5, 8, 13, 21 };		DONE
 	list.print();
 
 DONE:
