@@ -35,6 +35,20 @@ public:
 };
 int Element::count = 0;
 
+//class Iterator
+//{
+//	Element* Temp;
+//public:
+//	Iterator(Element* Temp = nullptr) :Temp(Temp)
+//	{
+//		cout << "ItConstructor:\t" << this << endl;
+//	}
+//	~Iterator()
+//	{
+//		cout << "ItDestructor:\t" << this << endl;
+//	}
+//};
+
 class ForwardList
 {
 	Element* Head;	//Голова списка - является точкой входа в список
@@ -47,6 +61,14 @@ public:
 	int get_size()const
 	{
 		return size;
+	}
+	Iterator begin()
+	{
+		return Head;
+	}
+	Iterator end()
+	{
+		return nullptr;
 	}
 	//					Constructors:
 	ForwardList()
@@ -395,6 +417,10 @@ void main()
 #endif // RANGE_BASED_FOR_ARRAY
 
 	ForwardList list = { 3, 5, 8, 13, 21 };
-	list.print();
-
+	//list.print();
+	for (int i : list)
+	{
+		cout << i << tab;
+	}
+	cout << endl;
 }
