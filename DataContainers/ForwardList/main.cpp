@@ -338,7 +338,7 @@ ForwardList operator+(const ForwardList& left, const ForwardList& right)
 	//for (Element* Temp = right.get_head(); Temp; Temp = Temp->pNext)result.push_back(Temp->Data);
 	for (ConstIterator it = right.begin(); it != right.end(); ++it)
 	{
-		*it *= 100;
+		//*it *= 100;
 		result.push_back(*it);
 	}
 	return result;

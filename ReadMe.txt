@@ -16,6 +16,9 @@ https://learn.microsoft.com/en-us/windows/win32/directx
 /////////////////////////////////////////////////////////////////////////////////////////
 
 TODO:
+1. В Solution 'DataContainers' добавить проект 'List' и в нем реализовать двусвязный список;
+
+DONE:
 1. Range-based for для ForwardList должен заработать;
 
 DONE:
