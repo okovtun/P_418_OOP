@@ -513,4 +513,9 @@ void main()
 	for (int i : list1) cout << i << tab; cout << endl;
 	for (int i : list2) cout << i << tab; cout << endl;
 	for (int i : list3) cout << i << tab; cout << endl;
+
+	uint8_t ui8t = 49;
+	cout << ui8t << endl;
+
+	
 }
