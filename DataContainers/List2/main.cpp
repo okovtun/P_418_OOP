@@ -33,6 +33,16 @@ public:
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
+	List(const std::initializer_list<int>& il) :List()
+	{
+		//initializer_list - это контейнер.
+		//Контейнер - это объект, который организует хранение других объектов в памяти.
+		//У любого контейнера есть методы begin() и end();
+		//begin() - возвращает итератор на начало контейнера;
+		//end()   - возвращает итератор на конец контейнера;
+		for (int const* it = il.begin(); it != il.end(); ++it)
+			push_back(*it);
+	}
 	~List()
 	{
 		while (Tail)pop_back();
@@ -156,11 +166,12 @@ public:
 	}
 };
 
-#define BASE_CHECK
+//#define BASE_CHECK
 
 void main()
 {
 	setlocale(LC_ALL, "");
+
 #ifdef BASE_CHECK
 	int n;
 	cout << "Введите размер списка: "; cin >> n;
@@ -185,4 +196,7 @@ void main()
 	list.reverse_print();
 #endif // BASE_CHECK
 
+	List list = { 3, 5, 8, 13, 21 };
+	//list.print();
+	for (int i : list)cout << i << tab; cout << endl;
 }

@@ -16,6 +16,13 @@ https://learn.microsoft.com/en-us/windows/win32/directx
 /////////////////////////////////////////////////////////////////////////////////////////
 
 TODO:
+1. Сделать COMMIT;
+2. Создать ветку "List2RBF";
+3. В созданной ветке обеспечить работу следующего кода:
+	List list = { 3, 5, 8, 13, 21 };
+	for (int i : list)cout << i << tab; cout << endl;
+
+DONE:
 1. В Solution 'DataContainers' добавить проект 'List' и в нем реализовать двусвязный список;
 
 DONE:
