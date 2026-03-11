@@ -154,27 +154,27 @@ public:
 	void reverse();
 	void print()const;
 };
-Element<T>* get_head()const
+template<typename T>Element<T>* ForwardList<T>::get_head()const
 {
 	return Head;
 }
-int get_size()const
+template<typename T>int ForwardList<T>::get_size()const
 {
 	return size;
 }
-ConstIterator<T> begin()const
+template<typename T>ConstIterator<T> ForwardList<T>::begin()const
 {
 	return Head;
 }
-ConstIterator<T> end()const
+template<typename T>ConstIterator<T> ForwardList<T>::end()const
 {
 	return nullptr;
 }
-Iterator<T> begin()
+template<typename T>Iterator<T> ForwardList<T>::begin()
 {
 	return Head;
 }
-Iterator<T> end()
+template<typename T>Iterator<T> ForwardList<T>::end()
 {
 	return nullptr;
 }
@@ -188,12 +188,15 @@ template<typename T>ForwardList<T>::ForwardList()
 	size = 0;
 	cout << "LConstructor:\t" << this << endl;
 }
-template<typename T>explicit ForwardList<T>::ForwardList(int size) :ForwardList()
+//template<typename T>explicit ForwardList<T>::ForwardList(int size) :ForwardList()
+//Ключевое слово 'explicit' можно писать только внутри класса, и только в объявлении метода.
+template<typename T>ForwardList<T>::ForwardList(int size) :ForwardList()
 {
 	while (size--)push_front(0);
 	cout << "1argLConstructor:\t" << this << endl;
 }
-ForwardList(const std::initializer_list<T>& il) :ForwardList()
+template<typename T>
+ForwardList<T>::ForwardList(const std::initializer_list<T>& il) :ForwardList()
 {
 	//begin() - возвращает Итератор на начало контейнера;
 	//end()   - возвращает Итератор на конец контейнера;
@@ -203,7 +206,8 @@ ForwardList(const std::initializer_list<T>& il) :ForwardList()
 		push_back(*it);
 	}
 }
-ForwardList(const ForwardList<T>& other) :ForwardList()
+template<typename T>
+ForwardList<T>::ForwardList(const ForwardList<T>& other) :ForwardList()
 {
 	//Deep copy
 	/*for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
@@ -211,7 +215,8 @@ ForwardList(const ForwardList<T>& other) :ForwardList()
 	*this = other;
 	cout << "LCopyConstructor:\t" << this << endl;
 }
-ForwardList(ForwardList<T>&& other) :ForwardList()
+template<typename T>
+ForwardList<T>::ForwardList(ForwardList<T>&& other) :ForwardList()
 {
 	//Shallow copy:
 	/*this->Head = other.Head;
@@ -221,14 +226,17 @@ ForwardList(ForwardList<T>&& other) :ForwardList()
 	*this = std::move(other);	//Метод 'std::move()' вызывает MoveAssignment.
 	cout << "LMoveConstructor:\t" << this << endl;
 }
-~ForwardList()
+template<typename T>
+ForwardList<T>::~ForwardList()
 {
 	while (Head)pop_front();
 	cout << "LDestructor:\t" << this << endl;
 }
 
 //				Operators:
-ForwardList<T>& operator=(const ForwardList<T>& other)
+template<typename T>
+ForwardList<T>& ForwardList<T>::operator=(const ForwardList<T>& other)
+//	type			name		(...parameters...)
 {
 	if (this == &other)return *this;
 	while (Head)pop_front();
@@ -238,7 +246,7 @@ ForwardList<T>& operator=(const ForwardList<T>& other)
 	cout << "LCopyAssignment:\t" << this << endl;
 	return *this;
 }
-ForwardList<T>& operator=(ForwardList<T>&& other)
+template<typename T>ForwardList<T>& ForwardList<T>::operator=(ForwardList<T>&& other)
 {
 	if (this == &other)return *this;
 	while (Head)pop_front();
@@ -249,7 +257,7 @@ ForwardList<T>& operator=(ForwardList<T>&& other)
 	cout << "LMoveAssignment:\t" << this << endl;
 	return *this;
 }
-T& operator[](int Index)
+template<typename T>T& ForwardList<T>::operator[](int Index)
 {
 	Element<T>* Temp = Head;
 	for (int i = 0; i < Index; i++)Temp = Temp->pNext;
@@ -257,12 +265,12 @@ T& operator[](int Index)
 }
 
 //				Adding elements:
-void push_front(T Data)
+template<typename T>void ForwardList<T>::push_front(T Data)
 {
 	Head = new Element<T>(Data, Head);
 	size++;
 }
-void push_back(T Data)
+template<typename T>void ForwardList<T>::push_back(T Data)
 {
 	if (Head == nullptr)return push_front(Data);
 
@@ -279,7 +287,7 @@ void push_back(T Data)
 	size++;
 }
 
-void insert(T Data, int Index)
+template<typename T>void ForwardList<T>::insert(T Data, int Index)
 {
 	if (Index == 0) return push_front(Data);
 
@@ -294,7 +302,7 @@ void insert(T Data, int Index)
 }
 
 //				Removing elements:
-void pop_front()
+template<typename T>void ForwardList<T>::pop_front()
 {
 	//1) Запоминаем адрес удаляемого элемента:
 	Element<T>* Erased = Head;
@@ -307,7 +315,7 @@ void pop_front()
 
 	size--;
 }
-void pop_back()
+template<typename T>void ForwardList<T>::pop_back()
 {
 	//1) Доходим до предпоследнего элемента списка:
 	Element<T>* Temp = Head;
@@ -323,7 +331,7 @@ void pop_back()
 }
 
 //				Methods:
-void reverse()
+template<typename T>void ForwardList<T>::reverse()
 {
 	ForwardList<T> reverse;
 	while (Head)
@@ -334,7 +342,7 @@ void reverse()
 	this->Head = reverse.Head;
 	reverse.Head = nullptr;
 }
-void print()const
+template<typename T>void ForwardList<T>::print()const
 {
 	/*Element* Temp = Head;	//Temp - это Итератор.
 	//Итератор - это указатель, при помощи которого можно перемещаться по элементам структуры данных.
