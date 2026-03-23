@@ -6,6 +6,7 @@ using std::endl;
 #define tab			"\t"
 #define delimiter	"\n-----------------------------------\n"
 
+
 class Tree
 {
 	class Element
@@ -25,7 +26,7 @@ class Tree
 		}
 	}*Root;
 public:
-
+	void insert()
 };
 
 void main()
