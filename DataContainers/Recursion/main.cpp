@@ -13,7 +13,7 @@ double Power(double a, int n);//a - основание степени, n - показатель степени
 void main()
 {
 	setlocale(LC_ALL, "");
-	cout << "Hello World!";
+	//cout << "Hello World!";
 	int n;
 	int a;
 	//cout << "Введите номер этажа: "; cin >> n;
@@ -24,7 +24,7 @@ void main()
 	cout << "Введите показатель степени: "; cin >> n;
 	cout << Power(a, n) << endl;
 	
-	//main();
+	main();
 	//Написать рекурсивную функцию ??? Factorial(???), которая принимает число,
 	//и возвращает факториал этого числа.
 }
@@ -48,6 +48,9 @@ int Factorial(int n)
 }
 double Power(double a, int n)
 {
-	if (n == 0)return 1;
-	else return a * Power(a, n - 1);
+	return n == 0 ? 1 : n > 0 ? a * Power(a, n - 1) : 1 / Power(a, -n);
+	/*if (n == 0)return 1;
+	else if(n>0)return a * Power(a, n - 1);
+	else return 1 / Power(a, -n);*/
+	//else return 1 / a * Power(a, n + 1);
 }
