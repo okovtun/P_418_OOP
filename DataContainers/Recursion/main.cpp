@@ -9,6 +9,7 @@ using namespace std;
 void Elevator(int floor);
 int Factorial(int n);
 double Power(double a, int n);//a - основание степени, n - показатель степени
+void Fibonacci(int n, int a = 0, int b = 1);
 
 void main()
 {
@@ -20,9 +21,12 @@ void main()
 	//Elevator(n);
 	//cout << "Введите число: "; cin >> n;
 	//cout << Factorial(n) << endl;
-	cout << "Введите основание степени: "; cin >> a;
+	/*cout << "Введите основание степени: "; cin >> a;
 	cout << "Введите показатель степени: "; cin >> n;
-	cout << Power(a, n) << endl;
+	cout << Power(a, n) << endl;*/
+	cout << "Введите предел ряда Фибоначчи: "; cin >> n;
+	Fibonacci(n, 22, 33);
+	cout << endl;
 	
 	main();
 	//Написать рекурсивную функцию ??? Factorial(???), которая принимает число,
@@ -53,4 +57,10 @@ double Power(double a, int n)
 	else if(n>0)return a * Power(a, n - 1);
 	else return 1 / Power(a, -n);*/
 	//else return 1 / a * Power(a, n + 1);
+}
+void Fibonacci(int n, int a, int b)
+{
+	if (a > n)return;
+	cout << a << "\t";
+	Fibonacci(n, b, a + b);
 }
