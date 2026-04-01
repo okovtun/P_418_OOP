@@ -112,17 +112,35 @@ private:
 			else insert(Data, Root->pRight);
 		}
 	}
-	void erase(int Data, Element* Root)
+	void erase(int Data, Element*& Root)
 	{
 		if (Root == nullptr)return;
 		if (Data == Root->Data)
 		{
 			if (Root->pLeft == Root->pRight)	//Проверям, является ли удаляемый элемент листком
 			{
-				//И если элемент - листок, удаляем его из памяти
+				//И если элемент - листок (НЕ имеет потомков), удаляем его из памяти
 				delete Root;
 				Root = nullptr;
 			}
+			else
+			{
+				if (count(Root->pLeft) > count(Root->pRight))
+				{
+					Root->Data = maxValue(Root->pLeft);
+					erase(maxValue(Root->pLeft), Root->pLeft);
+				}
+				else
+				{
+					Root->Data = minValue(Root->pRight);
+					erase(minValue(Root->pRight), Root->pRight);
+				}
+			}
+		}
+		if (Root)
+		{
+			if (Root->pLeft)erase(Data, Root->pLeft);
+			if (Root->pRight)erase(Data, Root->pRight);
 		}
 	}
 	int minValue(Element* Root)const
@@ -164,7 +182,7 @@ private:
 		print(Root->pRight);
 	}
 };
-class UniqueTree:public Tree
+class UniqueTree :public Tree
 {
 	void insert(int Data, Element* Root)
 	{
@@ -175,7 +193,7 @@ class UniqueTree:public Tree
 			if (Root->pLeft == nullptr)Root->pLeft = new Element(Data);
 			else insert(Data, Root->pLeft);
 		}
-		else if(Data > Root->Data)
+		else if (Data > Root->Data)
 		{
 			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
 			else insert(Data, Root->pRight);
@@ -226,16 +244,19 @@ void main()
 	cout << "Среднее-арифметическое элементов дерева: " << u_tree.avg() << endl;
 #endif // BASE_CHECK
 
-	Tree tree = 
-	{ 
-					50, 
+	Tree tree =
+	{
+					50,
 
-			25,				75, 
+			25,				75,
 
 		16,		32,		64,		85, 91, 98
 	};
 	tree.print();
 	cout << "Глубина дерева: " << tree.depth() << endl;
-	tree.clear();
+	//tree.clear();
+	int value;
+	cout << "Введите удаляемое значение: "; cin >> value;
+	tree.erase(value);
 	tree.print();
 }
