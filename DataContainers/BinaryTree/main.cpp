@@ -1,4 +1,5 @@
 #include<iostream>
+#include<ctime>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -19,11 +20,15 @@ protected:
 		Element(int Data, Element* pLeft = nullptr, Element* pRight = nullptr)
 			:Data(Data), pLeft(pLeft), pRight(pRight)
 		{
+#ifdef DEBUG
 			cout << "EConstructor:\t" << this << endl;
+#endif // DEBUG
 		}
 		~Element()
 		{
+#ifdef DEBUG
 			cout << "EDestructor:\t" << this << endl;
+#endif // DEBUG
 		}
 		friend class Tree;
 		friend class UniqueTree;
@@ -207,6 +212,8 @@ public:
 };
 
 //#define BASE_CHECK
+//#define ERASE_CHECK
+#define PERFORMANCE_CHECK
 
 void main()
 {
@@ -244,6 +251,7 @@ void main()
 	cout << "Среднее-арифметическое элементов дерева: " << u_tree.avg() << endl;
 #endif // BASE_CHECK
 
+#ifdef ERASE_CHECK
 	Tree tree =
 	{
 					50,
@@ -259,4 +267,58 @@ void main()
 	cout << "Введите удаляемое значение: "; cin >> value;
 	tree.erase(value);
 	tree.print();
+#endif // ERASE_CHECK
+
+#ifdef PERFORMANCE_CHECK
+	clock_t start;
+	clock_t end;
+	int n;
+	cout << "Введите размер дерева: "; cin >> n;
+	Tree tree;
+	start = clock();
+	for (int i = 0; i < n; i++)
+	{
+		tree.insert(rand() % 100);
+	}
+	end = clock();
+	cout << "Дерево заполнено за " << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+	//tree.print();
+	start = clock();
+	cout << "Минимальное значение в дереве: " << tree.minValue() << "\t";
+	end = clock();
+	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";
+
+	start = clock();
+	cout << "Максимальное значение в дереве: " << tree.maxValue() << "\t";
+	end = clock();
+	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";
+
+	start = clock();
+	cout << "Сумма элементов дерева: " << tree.sum() << "\t";
+	end = clock();
+	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";
+
+	start = clock();
+	cout << "Количество элементов дерева: " << tree.count() << "\t";
+	end = clock();
+	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";
+
+	start = clock();
+	cout << "Среднее-арифметическое элементов дерева: " << tree.avg() << "\t";
+	end = clock();
+	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";
+
+	start = clock();
+	cout << "Глубина дерева: " << tree.depth() << "\t";
+	end = clock();
+	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";
+
+
+
+	/*int value;
+	cout << "Введите удаляемое значение: "; cin >> value;
+	tree.erase(value);
+	tree.print();*/
+#endif // PERFORMANCE_CHECK
+
 }
