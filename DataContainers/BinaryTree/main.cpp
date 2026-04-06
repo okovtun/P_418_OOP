@@ -292,7 +292,7 @@ void main()
 	start = clock();
 	for (int i = 0; i < n; i++)
 	{
-		tree.insert(rand() % 100);
+		tree.insert(rand()/* % 1000*/);
 	}
 	end = clock();
 	cout << "Дерево заполнено за " << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
