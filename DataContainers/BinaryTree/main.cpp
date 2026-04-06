@@ -175,8 +175,11 @@ private:
 	int depth(Element* Root)const
 	{
 		if (Root == nullptr) return 0;
-		if (depth(Root->pLeft) > depth(Root->pRight))return depth(Root->pLeft) + 1;
-		else return depth(Root->pRight) + 1;
+		int lDepth = depth(Root->pLeft) + 1;
+		int rDepth = depth(Root->pRight) + 1;
+		return lDepth > rDepth ? lDepth : rDepth;
+		/*if (depth(Root->pLeft) > depth(Root->pRight))return depth(Root->pLeft) + 1;
+		else return depth(Root->pRight) + 1;*/
 	}
 
 	void print(Element* Root)const
@@ -210,6 +213,17 @@ public:
 		insert(Data, Root);
 	}
 };
+
+template<typename T>void measure(const char message[], T(Tree::*function)()const, const Tree& tree)
+{
+	clock_t start = clock();
+	T result = (tree.*function)();
+	clock_t end = clock();
+	cout.width(48);
+	cout << std::left;
+	cout << message << result << "\t вычислено за " 
+		<< double(end - start) / CLOCKS_PER_SEC << " секунд" << endl;
+}
 
 //#define BASE_CHECK
 //#define ERASE_CHECK
@@ -283,7 +297,13 @@ void main()
 	end = clock();
 	cout << "Дерево заполнено за " << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
 	//tree.print();
-	start = clock();
+	measure("Минимальное значение в дереве: ", &(Tree::minValue), tree);
+	measure("Максимальное значение в дереве: ", &(Tree::maxValue), tree);
+	measure("Сумма элементов дерева: ", &(Tree::sum), tree);
+	measure("Количество элементов дерева: ", &(Tree::count), tree);
+	measure("Среднее-арифметическое элементов дерева: ", &(Tree::avg), tree);
+	measure("Глубина дерева: ", &(Tree::depth), tree);
+	/*start = clock();
 	cout << "Минимальное значение в дереве: " << tree.minValue() << "\t";
 	end = clock();
 	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";
@@ -311,7 +331,7 @@ void main()
 	start = clock();
 	cout << "Глубина дерева: " << tree.depth() << "\t";
 	end = clock();
-	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";
+	cout << "вычислено за " << double(end - start) / CLOCKS_PER_SEC << " секунд.\n";*/
 
 
 
