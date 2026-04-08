@@ -88,6 +88,11 @@ public:
 	{
 		return depth(Root);
 	}
+	void depth_print(int depth)const
+	{
+		depth_print(Root, depth);
+		cout << endl;
+	}
 	void print()const
 	{
 		print(Root);
@@ -181,7 +186,17 @@ private:
 		/*if (depth(Root->pLeft) > depth(Root->pRight))return depth(Root->pLeft) + 1;
 		else return depth(Root->pRight) + 1;*/
 	}
-
+	void depth_print(Element* Root, int depth)const
+	{
+		if (Root == nullptr)return;
+		if (depth == 0)
+		{
+			cout << Root->Data << "\t";
+			return;
+		}
+		depth_print(Root->pLeft, depth - 1);
+		depth_print(Root->pRight, depth - 1);
+	}
 	void print(Element* Root)const
 	{
 		if (Root == nullptr)return;
@@ -230,7 +245,8 @@ void measure(const char message[], T	(Tree:: *function)		 (/*функция ничего не п
 
 //#define BASE_CHECK
 //#define ERASE_CHECK
-#define PERFORMANCE_CHECK
+//#define PERFORMANCE_CHECK
+#define DEPTH_CHECK
 
 void main()
 {
@@ -344,4 +360,13 @@ void main()
 	tree.print();*/
 #endif // PERFORMANCE_CHECK
 
+	Tree tree =
+	{
+					50,
+
+			25,				75,
+
+		16,		32,		64,		85, 91, 98
+	};
+	tree.depth_print(55);
 }
