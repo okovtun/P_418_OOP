@@ -29,7 +29,7 @@ void main()
 	cout << "Function pointers" << endl;
 
 #ifdef EXAMPLE_1
-	void(*pHello)() = &Hello;
+	void(*pHello)() = Hello;
 	cout << Hello << endl;
 	cout << pHello << endl;
 	(*pHello)();

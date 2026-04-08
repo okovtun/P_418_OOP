@@ -214,10 +214,13 @@ public:
 	}
 };
 
-template<typename T>void measure(const char message[], T(Tree::*function)()const, const Tree& tree)
+template<typename T>
+void measure(const char message[], T	(Tree:: *function)		 (/*функция ничего не принимает*/)	const, const Tree& tree)
+//								   type (Class::*function_poiter)(parameters)						modifiers
 {
 	clock_t start = clock();
-	T result = (tree.*function)();
+	T result = (tree.*function)(/*parameters*/);
+	//		   (object.*function_pointer)(parameters)
 	clock_t end = clock();
 	cout.width(48);
 	cout << std::left;
