@@ -88,15 +88,19 @@ public:
 	{
 		return depth(Root);
 	}
-	void depth_print(int depth)const
+	void depth_print(int depth, int interval)const
 	{
-		depth_print(Root, depth);
+		depth_print(Root, depth, interval);
 		cout << endl;
 	}
 	void print()const
 	{
 		print(Root);
 		cout << endl;
+	}
+	void tree_print()const
+	{
+		tree_print(0, depth() * 8);
 	}
 private:
 	void clear(Element*& Root)
@@ -186,16 +190,23 @@ private:
 		/*if (depth(Root->pLeft) > depth(Root->pRight))return depth(Root->pLeft) + 1;
 		else return depth(Root->pRight) + 1;*/
 	}
-	void depth_print(Element* Root, int depth)const
+	void depth_print(Element* Root, int depth, int interval = 8)const
 	{
-		if (Root == nullptr)return;
-		if (depth == 0)
+		cout.width(interval);
+		if (Root == nullptr)
 		{
-			cout << Root->Data << "\t";
+			cout << "";
 			return;
 		}
-		depth_print(Root->pLeft, depth - 1);
-		depth_print(Root->pRight, depth - 1);
+		if (depth == 0)
+		{
+			cout << Root->Data;
+			cout.width(interval);
+			cout << "";
+			return;
+		}
+		depth_print(Root->pLeft, depth - 1, interval);
+		depth_print(Root->pRight, depth - 1, interval);
 	}
 	void print(Element* Root)const
 	{
@@ -203,6 +214,17 @@ private:
 		print(Root->pLeft);
 		cout << Root->Data << "\t";
 		print(Root->pRight);
+	}
+	void tree_print(int depth, int interval = 8)const
+	{
+		if (depth == this->depth())return;
+		//int interval = (this->depth() - depth) * 8 + 1;
+		//cout.width(interval / 4);		cout << "";
+		depth_print(depth, interval);
+		cout << endl;
+		cout << endl;
+		cout << endl;
+		tree_print(depth + 1, interval / 2);
 	}
 };
 class UniqueTree :public Tree
@@ -230,7 +252,7 @@ public:
 };
 
 template<typename T>
-void measure(const char message[], T	(Tree:: *function)		 (/*функция ничего не принимает*/)	const, const Tree& tree)
+void measure(const char message[], T(Tree:: *function)		 (/*функция ничего не принимает*/)	const, const Tree& tree)
 //								   type (Class::*function_poiter)(parameters)						modifiers
 {
 	clock_t start = clock();
@@ -239,7 +261,7 @@ void measure(const char message[], T	(Tree:: *function)		 (/*функция ничего не п
 	clock_t end = clock();
 	cout.width(48);
 	cout << std::left;
-	cout << message << result << "\t вычислено за " 
+	cout << message << result << "\t вычислено за "
 		<< double(end - start) / CLOCKS_PER_SEC << " секунд" << endl;
 }
 
@@ -366,7 +388,8 @@ void main()
 
 			25,				75,
 
-		16,		32,		64,		85, 91, 98
+		16,		32,		64,		85, 91//, 98
 	};
-	tree.depth_print(55);
+	//tree.depth_print(55);
+	tree.tree_print();
 }
