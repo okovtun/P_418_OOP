@@ -51,6 +51,10 @@ public:
 	{
 		cout << "TDestructor:\t" << this << endl;
 	}
+	void balance()
+	{
+		balance(Root);
+	}
 	void clear()
 	{
 		clear(Root);
@@ -103,6 +107,29 @@ public:
 		tree_print(0, depth() * 8);
 	}
 private:
+	void balance(Element* Root)
+	{
+		if (Root == nullptr)return;
+		//Функция abs() возвращает абсолютное значени - модуль числа. 
+		if (abs(count(Root->pLeft) - count(Root->pRight)) < 2)return;
+		if (count(Root->pLeft) > count(Root->pRight))
+		{
+			if (Root->pRight == nullptr)Root->pRight = new Element(Root->Data);
+			else						insert(Root->Data, Root->pRight);
+			Root->Data = maxValue(Root->pLeft);
+			erase(maxValue(Root->pLeft), Root->pLeft);
+		}
+		if (count(Root->pLeft) < count(Root->pRight))
+		{
+			if (Root->pLeft == nullptr)	Root->pLeft = new Element(Root->Data);
+			else						insert(Root->Data, Root->pLeft);
+			Root->Data = minValue(Root->pRight);
+			erase(minValue(Root->pRight), Root->pRight);
+		}
+		balance(Root->pLeft);
+		balance(Root->pRight);
+		balance(Root);
+	}
 	void clear(Element*& Root)
 	{
 		if (Root == nullptr)return;
@@ -269,6 +296,7 @@ void measure(const char message[], T(Tree:: *function)		 (/*функция ничего не пр
 //#define ERASE_CHECK
 //#define PERFORMANCE_CHECK
 #define DEPTH_CHECK
+//#define TREE_PRINT
 
 void main()
 {
@@ -382,6 +410,7 @@ void main()
 	tree.print();*/
 #endif // PERFORMANCE_CHECK
 
+#ifdef TREE_PRINT
 	Tree tree =
 	{
 					50,
@@ -392,4 +421,14 @@ void main()
 	};
 	//tree.depth_print(55);
 	tree.tree_print();
+#endif // TREE_PRINT
+
+	Tree tree = { 55, 34, 21, 13, 8, 5, 3 };
+	//Tree tree = { 3, 5, 8, 13, 21, 34, 55 };
+	//Tree tree = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 21, 34, 55 };
+	//Tree tree = { 16,25,32,50,58,75,85 };
+	tree.tree_print();
+	tree.balance();
+	tree.tree_print();
+
 }
