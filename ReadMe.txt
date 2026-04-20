@@ -18,6 +18,14 @@ https://learn.microsoft.com/en-us/windows/win32/directx
 https://legacy.cplusplus.com/reference/stl/
 
 TODO:
+https://legacy.cplusplus.com/reference/stl/
+1. Добавить элемент в Односвязный Список по заданному индексу;
+2. Удалить элемент из Односвязного по заданному индексу;
+3. Добавить элемент в Двусвязный Список по заданному индексу;
+4. Удалить элемент из Двусвязного Списка по заданному индексу;
+
+
+DONE:
 0. https://legacy.cplusplus.com/reference/vector/vector/
 1. Изучить методы: reserve(), shrink_to_fit() и resize();
 2. Добавить элемент в Вектор по заданному индексу;
