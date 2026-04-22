@@ -19,11 +19,14 @@ https://legacy.cplusplus.com/reference/stl/
 
 TODO:
 https://legacy.cplusplus.com/reference/stl/
-1. Добавить элемент в Односвязный Список по заданному индексу;
+1. Добавить элемент в Односвязный Список по заданному индексу: 
+	https://stackoverflow.com/questions/31822494/why-does-stdforward-list-have-no-size-member-function
+	https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2543.htm;
 2. Удалить элемент из Односвязного по заданному индексу;
 3. Добавить элемент в Двусвязный Список по заданному индексу;
 4. Удалить элемент из Двусвязного Списка по заданному индексу;
-
+5. Изучить Lambda-выражения:
+	https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170
 
 DONE:
 0. https://legacy.cplusplus.com/reference/vector/vector/

@@ -43,11 +43,15 @@ class Iterator
 public:
 	Iterator(Element* Temp = nullptr) :Temp(Temp)
 	{
+#ifdef DEBUG
 		cout << "ItConstructor:\t" << this << endl;
+#endif // DEBUG
 	}
 	~Iterator()
 	{
+#ifdef DEBUG
 		cout << "ItDestructor:\t" << this << endl;
+#endif // DEBUG
 	}
 	Iterator& operator++()
 	{
@@ -352,6 +356,8 @@ ForwardList operator+(const ForwardList& left, const ForwardList& right)
 //#define MOVE_SEMANTIC_CHECK
 //#define RANGE_BASED_FOR_ARRAY
 //#define RANGE_BASED_FOR_LIST
+//#define OPERATOR_PLUS_CHECK
+#define SUBSCRIPT_OPERATOR_PERFORMANCE_CHECK
 
 void main()
 {
@@ -507,6 +513,7 @@ void main()
 	cout << endl;
 #endif // RANGE_BASED_FOR_LIST
 
+#ifdef OPERATOR_PLUS_CHECK
 	ForwardList list1 = { 3, 5, 8, 13, 21 };
 	ForwardList list2 = { 34, 55, 89 };
 	ForwardList list3 = list1 + list2;
@@ -516,6 +523,31 @@ void main()
 
 	uint8_t ui8t = 49;
 	cout << ui8t << endl;
+#endif // OPERATOR_PLUS_CHECK
 
+#ifdef SUBSCRIPT_OPERATOR_PERFORMANCE_CHECK
+	int n;
+	cout << "Введите размер списка: "; cin >> n;
+	ForwardList list(n);
+	clock_t start, end;
+
+	start = clock();
+	for (int i = 0; i < n; i++)
+	{
+		//list.push_front(rand());
+		list[i] = rand();
+	}
+	for (Iterator it = list.begin(); it != list.end(); ++it)
+	{
+		*it = rand();
+	}
+	end = clock();
+	cout << "Список заполнен за " << double(end - start) / CLOCKS_PER_SEC << " секунд" << endl;
+	/*for (int i = 0; i < list.get_size(); i++)
+	{
+		cout << list[i] << tab;
+	}
+	cout << endl;*/
+#endif // SUBSCRIPT_OPERATOR_PERFORMANCE_CHECK
 	
 }
