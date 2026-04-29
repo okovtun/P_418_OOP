@@ -18,6 +18,10 @@ https://learn.microsoft.com/en-us/windows/win32/directx
 https://legacy.cplusplus.com/reference/stl/
 
 TODO:
+1. Почитать про Timestamp;
+2. Добить Задачу 1:https://github.com/okovtun/P_418_OOP/blob/master/STL/GAI%20DZ_PS_C%2B%2B_nedelya_09.pdf;
+
+DONE:
 1. Вывести 'weekdays' на экран используя range-based for;
 2. Вывести 'dictionary' на экран используя range-based for;
 3. Решить Задачу 1:https://github.com/okovtun/P_418_OOP/blob/master/STL/GAI%20DZ_PS_C%2B%2B_nedelya_09.pdf;
