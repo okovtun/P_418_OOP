@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
+#include<fstream>
 #include<string>
 #include<map>
 #include<list>
@@ -86,6 +87,7 @@ std::ostream& operator<<(std::ostream& os, const Offence& obj)
 }
 
 void Print(const std::map<std::string, std::list<Offence>>& base);
+void Save(const std::map<std::string, std::list<Offence>>& base, const std::string& filename);
 
 //#define OFFENCE_CHECK
 
@@ -109,6 +111,7 @@ void main()
 	};
 
 	Print(base);
+	Save(base, "base.txt");
 
 }
 
@@ -131,4 +134,28 @@ void Print(const std::map<std::string, std::list<Offence>>& base)
 		}
 		cout << delimiter << endl;
 	}
+}
+void Save(const std::map<std::string, std::list<Offence>>& base, const std::string& filename)
+{
+	std::ofstream fout(filename);
+	for (
+		std::map<std::string, std::list<Offence>>::const_iterator it = base.begin();
+		it != base.end();
+		++it
+		)
+	{
+		fout << it->first << ":\n";
+		for (
+			std::list<Offence>::const_iterator of_it = it->second.begin();
+			of_it != it->second.end();
+			++of_it
+			)
+		{
+			fout << tab << *of_it << endl;
+		}
+	}
+	fout.close();
+	std::string cmd = "notepad ";
+	cmd += filename;
+	system(cmd.c_str());
 }
