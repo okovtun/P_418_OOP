@@ -37,6 +37,12 @@ public:
 	{
 		return std::asctime(&this->time);
 	}
+	time_t get_timestamp()const
+	{
+		tm time = this->time;
+		tm* p_time = &time;
+		return mktime(p_time);
+	}
 	int get_offence()const
 	{
 		return offence;
@@ -84,6 +90,11 @@ std::ostream& operator<<(std::ostream& os, const Offence& obj)
 	return	os << offence_time << tab
 		<< obj.get_location() << tab
 		<< OFFENCES.at(obj.get_offence());
+}
+std::ofstream& operator<<(std::ofstream& ofs, const Offence& obj)
+{
+	ofs << obj.get_timestamp() << " " << obj.get_offence() << " " << obj.get_location();
+	return ofs;
 }
 
 void Print(const std::map<std::string, std::list<Offence>>& base);
@@ -144,15 +155,17 @@ void Save(const std::map<std::string, std::list<Offence>>& base, const std::stri
 		++it
 		)
 	{
-		fout << it->first << ":\n";
+		fout << it->first << ":";
 		for (
 			std::list<Offence>::const_iterator of_it = it->second.begin();
 			of_it != it->second.end();
 			++of_it
 			)
 		{
-			fout << tab << *of_it << endl;
+			fout << *of_it << ",";
 		}
+		fout.seekp(-1,std::ios::cur);	//Смещаем курсор на один символ влево от текущей позиции курсора (std::ios::cur).
+		fout << ";" << endl;;
 	}
 	fout.close();
 	std::string cmd = "notepad ";
